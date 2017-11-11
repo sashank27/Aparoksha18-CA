@@ -1,4 +1,4 @@
-package org.aparoksha.app18.ca
+package org.aparoksha.app18.ca.Activities
 
 import android.app.Activity
 import android.content.Intent
@@ -16,14 +16,12 @@ import org.jetbrains.anko.toast
 import java.util.*
 import android.util.Log
 import android.graphics.Bitmap
-import android.R.attr.data
 import android.content.Context
 import android.net.Uri
-import android.support.v4.app.NotificationCompat.getExtras
 import android.provider.MediaStore.Images
+import org.aparoksha.app18.ca.R
 import org.jetbrains.anko.UI
 import java.io.ByteArrayOutputStream
-import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
@@ -75,6 +73,11 @@ class MainActivity : AppCompatActivity() {
                         RC_SIGN_IN)
             }
         }
+
+        scratch.setOnClickListener({
+            val i = Intent(this,ScratchCardsActivity::class.java)
+            startActivity(i)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
