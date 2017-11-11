@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("aaya","aaya")
         if (requestCode == RC_SIGN_IN) {
             if(resultCode == Activity.RESULT_OK) {
                 toast("Signed In")
