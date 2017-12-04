@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="org.aparoksha.app18.ca.Activities.MainActivity">
 
-
     <Button
         android:id="@+id/upload"
         style="@style/FirebaseUI.Button"
@@ -54,5 +53,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/camera"
         app:layout_constraintVertical_bias="0.083" />
-
 </android.support.constraint.ConstraintLayout>
