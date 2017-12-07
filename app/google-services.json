@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "289319144645",
-    "firebase_url": "https://aparoksha18-ca.firebaseio.com",
-    "project_id": "aparoksha18-ca",
-    "storage_bucket": "aparoksha18-ca.appspot.com"
+    "project_number": "960531446886",
+    "firebase_url": "https://aparoksha-ca18.firebaseio.com",
+    "project_id": "aparoksha-ca18",
+    "storage_bucket": "aparoksha-ca18.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:289319144645:android:f5f870146e4b490f",
+        "mobilesdk_app_id": "1:960531446886:android:f5f870146e4b490f",
         "android_client_info": {
           "package_name": "org.aparoksha.app18.ca"
         }
       },
       "oauth_client": [
         {
-          "client_id": "289319144645-klile8hasdlmn8rv51ea0vn18nm1u8hm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "org.aparoksha.app18.ca",
-            "certificate_hash": "8d63d0b03c05b12520d561eebed3802253aa528b"
-          }
-        },
-        {
-          "client_id": "289319144645-toli8hgi5r0bih8g9h57ojgmoiua88g2.apps.googleusercontent.com",
+          "client_id": "960531446886-2s7eneq5ebfjfffou5p4e7cr5n99e4l7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA8h7AjrVFswK8meBxcWg276gAKDNHoAIc"
+          "current_key": "AIzaSyCJThWi0hLKug4kHRv_2mTIIMupCOeohT8"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "289319144645-toli8hgi5r0bih8g9h57ojgmoiua88g2.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
