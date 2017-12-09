@@ -16,12 +16,18 @@ import org.jetbrains.anko.toast
 import java.util.*
 import android.graphics.Bitmap
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.MediaStore.Images
+import android.text.Html
 import com.google.firebase.database.*
 import org.aparoksha.app18.ca.Models.Data
 import org.aparoksha.app18.ca.R
 import java.io.ByteArrayOutputStream
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mFirebaseAuth : FirebaseAuth
@@ -36,31 +42,35 @@ class MainActivity : AppCompatActivity() {
     private val CAMERA_REQUEST = 3
     private val RC_NEW_CARD = 4
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+    private fun initDB() {
         dbData = Data()
         mFirebaseAuth = FirebaseAuth.getInstance()
         mFirebaseStorage = FirebaseStorage.getInstance()
         mStorageReference = mFirebaseStorage.getReference()
         mFirebaseDB = FirebaseDatabase.getInstance()
+    }
+
+    private fun setListeners() {
 
         upload.setOnClickListener({
+            if(fab_menu.isOpened)
+                fab_menu.close(true)
             val intent = Intent(Intent.ACTION_GET_CONTENT)
-                intent.type = "image/jpeg"
-                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
-                startActivityForResult(Intent.createChooser(intent, "Select Photo to be uploaded"), RC_PHOTO_PICKER)
+            intent.type = "image/jpeg"
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+            startActivityForResult(Intent.createChooser(intent, "Select Photo to be uploaded"), RC_PHOTO_PICKER)
         })
 
         camera.setOnClickListener({
+            if(fab_menu.isOpened)
+                fab_menu.close(true)
             val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(cameraIntent, CAMERA_REQUEST)
         })
 
         scratch.setOnClickListener({
-            val i = Intent(this,ScratchCardsActivity::class.java)
-            startActivityForResult(i,RC_NEW_CARD)
+            val cards = Intent(this,ScratchCardsActivity::class.java)
+            startActivityForResult(cards,RC_NEW_CARD)
         })
 
         mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
@@ -79,6 +89,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        initDB()
+        setListeners()
+
+        title = "My Dashboard"
+
         if(mFirebaseAuth.currentUser != null) {
             mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
             mDBReference.keepSynced(true)
@@ -92,6 +113,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 override fun onCancelled(p0: DatabaseError?) {
                         //To change body of created functions use File | Settings | File Templates
+                }
+            })
+
+            mDBReference.child("totalPoints").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(p0: DataSnapshot?) {
+                    pointsValue.text = p0?.getValue().toString()
+                }
+                override fun onCancelled(p0: DatabaseError?) {
+                    //To change body of created functions use File | Settings | File Templates.
                 }
             })
         } else {
@@ -199,7 +229,6 @@ class MainActivity : AppCompatActivity() {
                 mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.email)
             }
             mDBReference.child("revealedCount").setValue(0)
-            mDBReference.child("totalPoints").setValue(0)
         }
     }
 
