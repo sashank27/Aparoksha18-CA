@@ -1,13 +1,13 @@
-package org.aparoksha.app18.ca.Activities
+package org.aparoksha.app18.ca.activities
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import org.aparoksha.app18.ca.Fragments.NewCardFragment
+import org.aparoksha.app18.ca.fragments.NewCardFragment
 import org.aparoksha.app18.ca.R
-import org.aparoksha.app18.ca.Fragments.ScratchCardFragment
+import org.aparoksha.app18.ca.fragments.ScratchCardFragment
 
 /**
  * Created by sashank on 9/11/17.

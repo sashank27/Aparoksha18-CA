@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="match_parent"
+<FrameLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/outer_frame"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -7,9 +8,9 @@
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/inner_frame"
-        android:background="@android:color/background_dark"
         android:alpha="0.8"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        tools:ignore="UselessParent">
 
         <FrameLayout
             android:id="@+id/card_frame"
@@ -40,9 +41,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
             android:textSize="20sp"
-            android:textColor="@android:color/white"
-            android:textStyle="italic"
-            android:text="Scratch to Win Points!!" />
+            android:text="Scratch to Win Points" />
 
     </RelativeLayout>
 

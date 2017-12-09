@@ -1,4 +1,4 @@
-package org.aparoksha.app18.ca.Fragments
+package org.aparoksha.app18.ca.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

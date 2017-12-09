@@ -1,4 +1,4 @@
-package org.aparoksha.app18.ca.Activities
+package org.aparoksha.app18.ca.activities
 
 import android.app.Activity
 import android.app.ProgressDialog
@@ -16,13 +16,10 @@ import org.jetbrains.anko.toast
 import java.util.*
 import android.graphics.Bitmap
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.MediaStore.Images
-import android.text.Html
 import com.google.firebase.database.*
-import org.aparoksha.app18.ca.Models.Data
+import org.aparoksha.app18.ca.models.Data
 import org.aparoksha.app18.ca.R
 import java.io.ByteArrayOutputStream
 import com.google.firebase.database.DatabaseError
@@ -30,9 +27,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mFirebaseAuth : FirebaseAuth
+    private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
-    private lateinit var mStorageReference :StorageReference
+    private lateinit var mStorageReference: StorageReference
     private lateinit var mFirebaseStorage: FirebaseStorage
     private lateinit var mFirebaseDB: FirebaseDatabase
     private lateinit var mDBReference: DatabaseReference
@@ -46,14 +43,14 @@ class MainActivity : AppCompatActivity() {
         dbData = Data()
         mFirebaseAuth = FirebaseAuth.getInstance()
         mFirebaseStorage = FirebaseStorage.getInstance()
-        mStorageReference = mFirebaseStorage.getReference()
+        mStorageReference = mFirebaseStorage.reference
         mFirebaseDB = FirebaseDatabase.getInstance()
     }
 
     private fun setListeners() {
 
         upload.setOnClickListener({
-            if(fab_menu.isOpened)
+            if (fab_menu.isOpened)
                 fab_menu.close(true)
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/jpeg"
@@ -62,20 +59,21 @@ class MainActivity : AppCompatActivity() {
         })
 
         camera.setOnClickListener({
-            if(fab_menu.isOpened)
+            if (fab_menu.isOpened)
                 fab_menu.close(true)
             val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(cameraIntent, CAMERA_REQUEST)
         })
 
         scratch.setOnClickListener({
-            val cards = Intent(this,ScratchCardsActivity::class.java)
-            startActivityForResult(cards,RC_NEW_CARD)
+            val cards = Intent(this, ScratchCardsActivity::class.java)
+            startActivityForResult(cards, RC_NEW_CARD)
         })
 
         mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val mUser = firebaseAuth.currentUser
-            if(mUser!=null) {} else {
+            if (mUser != null) {
+            } else {
                 startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
@@ -100,26 +98,28 @@ class MainActivity : AppCompatActivity() {
 
         title = "My Dashboard"
 
-        if(mFirebaseAuth.currentUser != null) {
+        if (mFirebaseAuth.currentUser != null) {
             mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
             mDBReference.keepSynced(true)
             mDBReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot) {
-                    if(p0.value != null) {
-                        dbData = p0.getValue(Data::class.java)!!
+                    dbData = if (p0.value != null) {
+                        p0.getValue(Data::class.java)!!
                     } else {
-                        dbData = Data()
+                        Data()
                     }
                 }
+
                 override fun onCancelled(p0: DatabaseError?) {
-                        //To change body of created functions use File | Settings | File Templates
+                    //To change body of created functions use File | Settings | File Templates
                 }
             })
 
             mDBReference.child("totalPoints").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot?) {
-                    pointsValue.text = p0?.getValue().toString()
+                    pointsValue.text = p0?.value.toString()
                 }
+
                 override fun onCancelled(p0: DatabaseError?) {
                     //To change body of created functions use File | Settings | File Templates.
                 }
@@ -130,12 +130,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu,menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.logout) {
+        if (item.itemId == R.id.logout) {
             AuthUI.getInstance().signOut(this)
             return true
         }
@@ -145,22 +145,23 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
-            if(resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 toast("Signed In")
-                if(mFirebaseAuth.currentUser != null) {
+                if (mFirebaseAuth.currentUser != null) {
                     mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
                     mDBReference.keepSynced(true)
                 }
                 mDBReference.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(p0: DataSnapshot) {
-                        if(p0.value != null){
-                            dbData = p0.getValue(Data::class.java)!!
+                        dbData = if (p0.value != null) {
+                            p0.getValue(Data::class.java)!!
                         } else {
-                            dbData = Data()
+                            Data()
                         }
                     }
+
                     override fun onCancelled(p0: DatabaseError?) {
-                         //To change body of created functions use File | Settings | File Templates.
+                        //To change body of created functions use File | Settings | File Templates.
                     }
                 })
 
@@ -168,15 +169,15 @@ class MainActivity : AppCompatActivity() {
                 toast("Sign In Cancelled")
                 finish()
             }
-        } else if(requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
-            if(mFirebaseAuth.currentUser != null) {
-                val pd = ProgressDialog.show(this,"Uploading File","Processing...")
-                val SelectedImageUri = data!!.getData()
+        } else if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
+            if (mFirebaseAuth.currentUser != null) {
+                val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
+                val selectedImageUri = data!!.data
 
                 val userStorage = mStorageReference.child("user")
                 val idReference = userStorage.child(mFirebaseAuth.currentUser!!.uid)
                 val photoRef = idReference.child(System.currentTimeMillis().toString())
-                photoRef.putFile(SelectedImageUri).addOnSuccessListener(this) { taskSnapshot ->
+                photoRef.putFile(selectedImageUri).addOnSuccessListener(this) {
                     pd.dismiss()
                     updateScore()
                     toast("Successfully Uploaded")
@@ -186,16 +187,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            if(mFirebaseAuth.currentUser != null) {
+            if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val extras = data!!.extras
                 val imageBitmap = extras.get("data") as Bitmap
-                val SelectedImageUri = getImageUri(applicationContext, imageBitmap)
+                val selectedImageUri = getImageUri(applicationContext, imageBitmap)
 
                 val userStorage = mStorageReference.child("user")
                 val idReference = userStorage.child(mFirebaseAuth.currentUser!!.uid)
                 val photoRef = idReference.child(System.currentTimeMillis().toString())
-                photoRef.putFile(SelectedImageUri).addOnSuccessListener(this) {
+                photoRef.putFile(selectedImageUri).addOnSuccessListener(this) {
                     pd.dismiss()
                     updateScore()
                     toast("Successfully Uploaded")
@@ -204,8 +205,8 @@ class MainActivity : AppCompatActivity() {
                     toast("Failed")
                 }
             }
-        } else if(requestCode == RC_NEW_CARD && resultCode == Activity.RESULT_OK){
-            if(mFirebaseAuth.currentUser!!.email == null) {
+        } else if (requestCode == RC_NEW_CARD && resultCode == Activity.RESULT_OK) {
+            if (mFirebaseAuth.currentUser!!.email == null) {
                 mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.phoneNumber)
             } else {
                 mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.email)
@@ -214,7 +215,7 @@ class MainActivity : AppCompatActivity() {
             mDBReference.child("revealedCount").setValue(0)
             mDBReference.child("count").setValue(0)
 
-            dbData.totalPoints +=  data!!.data.toString().toLong()
+            dbData.totalPoints += data!!.data.toString().toLong()
             mDBReference.child("totalPoints").setValue(dbData.totalPoints)
         }
     }
@@ -223,7 +224,7 @@ class MainActivity : AppCompatActivity() {
         dbData.count++
         mDBReference.child("count").setValue(dbData.count)
         if (dbData.count == 1L) {
-            if(mFirebaseAuth.currentUser!!.email == null) {
+            if (mFirebaseAuth.currentUser!!.email == null) {
                 mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.phoneNumber)
             } else {
                 mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.email)
@@ -235,7 +236,7 @@ class MainActivity : AppCompatActivity() {
     private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null)
+        val path = Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
         return Uri.parse(path)
     }
 
@@ -246,6 +247,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mFirebaseAuth.addAuthStateListener (mAuthStateListener)
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener)
     }
 }

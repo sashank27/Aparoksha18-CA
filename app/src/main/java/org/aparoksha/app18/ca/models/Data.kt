@@ -1,4 +1,4 @@
-package org.aparoksha.app18.ca.Models
+package org.aparoksha.app18.ca.models
 
 /**
  * Created by akshat on 2/12/17.

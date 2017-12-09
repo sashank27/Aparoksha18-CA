@@ -1,8 +1,5 @@
-package org.aparoksha.app18.ca.Fragments;
+package org.aparoksha.app18.ca.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,12 +10,11 @@ import android.widget.TextView;
 
 import com.clock.scratch.ScratchView;
 
-import org.aparoksha.app18.ca.Activities.ScratchCardsActivity;
-import org.aparoksha.app18.ca.Models.Points;
+import org.aparoksha.app18.ca.activities.ScratchCardsActivity;
+import org.aparoksha.app18.ca.models.Points;
 import org.aparoksha.app18.ca.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sashank on 12/11/17.
