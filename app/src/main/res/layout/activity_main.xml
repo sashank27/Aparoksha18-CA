@@ -3,44 +3,119 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fab="http://schemas.android.com/apk/res-auto">
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/pointsTitle"
+            android:id="@+id/user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Points Earned:"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/pointsText"
+            android:layout_marginTop="35dp"
+            android:text="user identifier"
+            android:textColor="@android:color/black"
             android:textSize="20dp"
-            android:textColor="@android:color/black"
-            android:layout_alignParentStart="true"
-            />
-        <TextView
-            android:id="@+id/pointsValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="20"
-            android:textSize="16dp"
-            android:textColor="@android:color/black"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBaseline="@id/pointsTitle"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/scratch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:text="Get your Scratch Card"
+            android:layout_below="@+id/shareProgress"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/pointsTitle"
-            android:layout_margin="20dp"
-            android:padding="30dp"/>
+            android:padding="30dp"
+            android:text="Get your Scratch Card"
+            android:textColor="@android:color/black" />
+
+
+        <ProgressBar
+            android:id="@+id/totalProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/imageView"
+            android:layout_marginTop="25dp"
+            android:progress="25"
+            android:scaleY="8" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/likeProgress"
+            android:layout_below="@+id/totalProgress"
+            android:layout_marginTop="19dp"
+            android:text="Points by Categories"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_below="@+id/textView2"
+            android:text="Likes"
+            android:textColor="@android:color/black"/>
+
+        <ProgressBar
+            android:id="@+id/likeProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/likes"
+            android:progress="25"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/likeProgress"
+            android:layout_below="@+id/likeProgress"
+            android:layout_marginTop="11dp"
+            android:text="Shares"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/pointsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView2"
+            android:layout_alignStart="@+id/textView2"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:text="25 / 100" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/scratch"
+            fab:srcCompat="@mipmap/ic_launcher_round" />
+
+        <ProgressBar
+            android:id="@+id/shareProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/share"
+            android:progress="25"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
 
         <fragment
             android:layout_width="match_parent"
@@ -53,7 +128,7 @@
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/fab_menu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:paddingBottom="16dp"
