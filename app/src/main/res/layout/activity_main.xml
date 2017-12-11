@@ -42,6 +42,14 @@
             android:layout_margin="20dp"
             android:padding="30dp"/>
 
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="org.aparoksha.app18.ca.fragments.LeaderboardFragment"
+            android:layout_below="@id/scratch"
+            android:id="@+id/leaderboard"
+            android:layout_margin="10dp"/>
+
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/fab_menu"
             android:layout_width="match_parent"
@@ -83,6 +91,7 @@
                 fab:fab_size="mini" />
 
         </com.github.clans.fab.FloatingActionMenu>
+
 
     </RelativeLayout>
 
