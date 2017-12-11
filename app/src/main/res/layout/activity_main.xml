@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -22,12 +25,14 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <TextView
+        <Button
             android:id="@+id/scratch"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/shareProgress"
             android:layout_centerHorizontal="true"
+            android:elevation="0dp"
             android:padding="30dp"
             android:text="Get your Scratch Card"
             android:textColor="@android:color/black" />
@@ -133,7 +138,6 @@
             android:layout_alignParentEnd="true"
             android:paddingBottom="16dp"
             android:paddingEnd="16dp"
-            fab:menu_backgroundColor="#ccffffff"
             fab:fab_colorNormal="#DA4336"
             fab:fab_colorPressed="#E75043"
             fab:fab_colorRipple="#99FFFFFF"
@@ -171,3 +175,6 @@
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+
+
+</android.support.v4.widget.NestedScrollView>
