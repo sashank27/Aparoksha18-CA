@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -22,12 +25,14 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <TextView
+        <Button
             android:id="@+id/scratch"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/shareProgress"
             android:layout_centerHorizontal="true"
+            android:elevation="0dp"
             android:padding="30dp"
             android:text="Get your Scratch Card"
             android:textColor="@android:color/black" />
@@ -117,6 +122,14 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"/>
 
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="org.aparoksha.app18.ca.fragments.LeaderboardFragment"
+            android:layout_below="@id/scratch"
+            android:id="@+id/leaderboard"
+            android:layout_margin="10dp"/>
+
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/fab_menu"
             android:layout_width="match_parent"
@@ -125,7 +138,6 @@
             android:layout_alignParentEnd="true"
             android:paddingBottom="16dp"
             android:paddingEnd="16dp"
-            fab:menu_backgroundColor="#ccffffff"
             fab:fab_colorNormal="#DA4336"
             fab:fab_colorPressed="#E75043"
             fab:fab_colorRipple="#99FFFFFF"
@@ -159,6 +171,10 @@
 
         </com.github.clans.fab.FloatingActionMenu>
 
+
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+
+
+</android.support.v4.widget.NestedScrollView>
