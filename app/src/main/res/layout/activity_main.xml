@@ -171,7 +171,6 @@
 
         </com.github.clans.fab.FloatingActionMenu>
 
-
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
