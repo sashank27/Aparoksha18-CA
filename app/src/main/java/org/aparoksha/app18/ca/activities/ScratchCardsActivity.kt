@@ -1,13 +1,15 @@
 package org.aparoksha.app18.ca.activities
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import org.aparoksha.app18.ca.fragments.NewCardFragment
+import android.support.v7.widget.GridLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
+import kotlinx.android.synthetic.main.activity_scratch.*
 import org.aparoksha.app18.ca.R
-import org.aparoksha.app18.ca.fragments.ScratchCardFragment
+import org.aparoksha.app18.ca.adapters.ScratchCardsAdapter
+import org.aparoksha.app18.ca.fragments.NewCardFragment
 
 /**
  * Created by sashank on 9/11/17.
@@ -15,7 +17,7 @@ import org.aparoksha.app18.ca.fragments.ScratchCardFragment
 
 class ScratchCardsActivity : AppCompatActivity() {
 
-    private var pointsRecieved = -1;
+   /* private var pointsRecieved = -1;
 
     fun getPointsRecieved(): Int {
         return pointsRecieved
@@ -23,38 +25,41 @@ class ScratchCardsActivity : AppCompatActivity() {
 
     fun setPointsRecieved(x: Int) {
         pointsRecieved = x;
-    }
+    }*/
+
+    private lateinit var mFirebaseDB: FirebaseDatabase
+    private lateinit var mFirebaseAuth: FirebaseAuth
+    private lateinit var DBQuery: Query
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scratch)
-        title = "Cards"
+        title = "Your Cards"
 
-        val ft =supportFragmentManager.beginTransaction()
-        ft.add(R.id.frame,ScratchCardFragment())
-        ft.commit()
+        mFirebaseAuth = FirebaseAuth.getInstance()
+        mFirebaseDB = FirebaseDatabase.getInstance()
+
+        DBQuery = mFirebaseDB.getReference("users").
+                child(mFirebaseAuth.currentUser!!.uid).child("cards")
+
+        recyclerview.layoutManager = GridLayoutManager(this,2)
+        recyclerview.adapter = ScratchCardsAdapter(DBQuery,this)
+
     }
+
 
     override fun onBackPressed() {
         val fragmentList = supportFragmentManager.fragments
 
         if(fragmentList.size != 0) {
             val activeFragment = fragmentList[fragmentList.size - 1]
-            if (activeFragment is ScratchCardFragment) {
-                super.onBackPressed()
-            } else if (activeFragment is NewCardFragment) {
-                supportFragmentManager.beginTransaction().
-                        replace(R.id.frame, ScratchCardFragment()).commit()
-            }
-            val data = Intent()
-            data.data = Uri.parse(Integer.toString(pointsRecieved))
-            if(pointsRecieved == -1)
-                setResult(Activity.RESULT_CANCELED, data)
+            if (activeFragment is NewCardFragment)
+                supportFragmentManager.beginTransaction().remove(activeFragment).commit()
             else
-                setResult(Activity.RESULT_OK, data)
-            finish()
+                super.onBackPressed()
         }
         else
             super.onBackPressed()
     }
+
 }

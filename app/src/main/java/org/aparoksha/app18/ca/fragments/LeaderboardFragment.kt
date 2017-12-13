@@ -15,6 +15,7 @@ import org.aparoksha.app18.ca.R
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.Query
 import kotlinx.android.synthetic.main.layout_leaderboard_member.view.*
+import org.aparoksha.app18.ca.adapters.LeaderboardAdapter
 import org.aparoksha.app18.ca.models.User
 
 
@@ -49,28 +50,4 @@ class LeaderboardFragment: Fragment() {
         else
             AuthUI.getInstance().signOut(activity)
     }
-}
-
-class LeaderboardViewHolder(private var mView: View) : RecyclerView.ViewHolder(mView) {
-
-    fun bindView(user: User, position: Int) {
-        mView.username.text = user.name;
-        mView.score.text = user.score.toString()
-        mView.rank.text = (position+1).toString()
-    }
-
-}
-
-class LeaderboardAdapter(mRef : Query) : FirebaseRecyclerAdapter<User, LeaderboardViewHolder>(
-        User::class.java,
-        R.layout.layout_leaderboard_member,
-        LeaderboardViewHolder::class.java,
-        mRef) {
-
-    override fun populateViewHolder(viewHolder: LeaderboardViewHolder?, model: User?, position: Int) {
-        if (model != null) {
-            viewHolder?.bindView(model,position)
-        }
-    }
-
 }

@@ -16,19 +16,11 @@ import com.bumptech.glide.Glide
  * Created by akshat on 12/12/17.
  */
 
-class UploadsAdapter : FirebaseRecyclerAdapter<Image, UploadsAdapter.UploadsViewHolder> {
-
-    var mStorageReference : StorageReference
-    var mContext: Context
-
-    constructor(mRef: Query, mStorageReference: StorageReference, mContext : Context) : super(
-            Image::class.java,
-            R.layout.uploads_container,
-            UploadsViewHolder::class.java,
-            mRef) {
-        this.mStorageReference = mStorageReference
-        this.mContext = mContext
-    }
+class UploadsAdapter(mRef: Query, var mStorageReference: StorageReference, var mContext: Context) : FirebaseRecyclerAdapter<Image, UploadsAdapter.UploadsViewHolder>(
+        Image::class.java,
+        R.layout.uploads_container,
+        UploadsViewHolder::class.java,
+        mRef) {
 
     override fun populateViewHolder(viewHolder: UploadsViewHolder?, model: Image?, position: Int) {
         if (model != null) {

@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.clock.scratch.ScratchView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import org.aparoksha.app18.ca.activities.ScratchCardsActivity;
 import org.aparoksha.app18.ca.models.Points;
@@ -28,8 +31,9 @@ public class NewCardFragment extends Fragment {
 
     ScratchView mScratchView;
     LottieAnimationView animationView;
-    FrameLayout animationFrame;
     FrameLayout cardFrame;
+    private int points;
+
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.popup_card,container,false);
@@ -42,31 +46,23 @@ public class NewCardFragment extends Fragment {
         mScratchView = view.findViewById(R.id.scratch_view);
         animationView = view.findViewById(R.id.animationView);
         cardFrame = view.findViewById(R.id.card_frame);
+        points = Integer.parseInt(this.getArguments().get("points").toString());
 
-        final int generatedPoint = getRandomValue();
-
-        //setting points using getters and setters, so as to pass data between fragments
-
-        //TODO: Implement a better approach(e.g. using interface) so as to minimize compling
-
-        ((ScratchCardsActivity) getActivity()).setPointsRecieved(generatedPoint);
-
-        //TODO: Proper image according to points generated is required
         mScratchView.setMaxPercent(40);
         mScratchView.setEraserSize(100.0F);
-        mScratchView.setMaskColor(-0xff8c1a);
-        mScratchView.setWatermark(-1);
+        mScratchView.setMaskColor(R.color.fui_linkColor);
+        mScratchView.setWatermark(R.drawable.ic_demo_user);
 
         mScratchView.setEraseStatusListener(new ScratchView.EraseStatusListener() {
             @Override
             public void onProgress(final int percent) {
                 if(percent > 40 && percent != 100) {
                     mScratchView.clear();
-                    showResultScratch(generatedPoint);
+                    showResultScratch(points);
 
-                    if(generatedPoint != 0)
+                    if(points != 0)
                         ((TextView) view.findViewById(R.id.textView)).
-                                setText("You won " + Integer.toString(generatedPoint) + " Points!!");
+                                setText("You won " + Integer.toString(points) + " Points!!");
                     else
                         ((TextView) view.findViewById(R.id.textView)).
                                 setText("Bad luck. Come back soon !!");
@@ -85,20 +81,16 @@ public class NewCardFragment extends Fragment {
         cardFrame.setVisibility(View.GONE);
         animationView.setVisibility(View.VISIBLE);
 
-        Log.d("POINTS",  Integer.toString(generatedPoint));
-        if(generatedPoint != 0) {
+        if(generatedPoint != 0)
             animationView.setAnimation("emoji_wink.json");
-            Log.d("POINTS",  "Loaded");
-        }
-        else {
+        else
             animationView.setAnimation("emoji_shock.json");
-            Log.d("POINTS",  "Loaded");
 
-        }
         animationView.playAnimation();
         animationView.loop(true);
     }
 
+    //TODO: Deploy this function to cloud
     /*  Priorities:
         0 -> 50%, 5 -> 20%, 10 -> 10%, 20 -> 5%, 30 -> 5%, 40 -> 5%, 50 -> 3%, 100 -> 2%
         */

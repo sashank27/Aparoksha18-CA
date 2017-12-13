@@ -301,4 +301,11 @@ class MainActivity : AppCompatActivity() {
         }
         mFirebaseAuth.addAuthStateListener(mAuthStateListener)
     }
+
+    override fun onBackPressed() {
+        if(fab_menu.isOpened)
+            fab_menu.close(true)
+        else
+            super.onBackPressed()
+    }
 }
