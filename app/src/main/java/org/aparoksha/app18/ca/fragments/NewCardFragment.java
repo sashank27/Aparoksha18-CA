@@ -50,7 +50,7 @@ public class NewCardFragment extends Fragment {
 
         mScratchView.setMaxPercent(40);
         mScratchView.setEraserSize(100.0F);
-        mScratchView.setMaskColor(R.color.fui_linkColor);
+        mScratchView.setMaskColor(R.color.fui_bgFacebook);
         mScratchView.setWatermark(R.drawable.ic_demo_user);
 
         mScratchView.setEraseStatusListener(new ScratchView.EraseStatusListener() {

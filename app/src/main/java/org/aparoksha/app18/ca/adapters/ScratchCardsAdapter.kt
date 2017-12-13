@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.Query
@@ -51,7 +53,7 @@ class ScratchCardsAdapter(var mRef: Query, var mContext: Context) : FirebaseRecy
 
                 mView.setOnClickListener {
                     val ft = (mContext as AppCompatActivity).supportFragmentManager.beginTransaction()
-
+                    mContext.window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
                     val bundle = Bundle()
                     bundle.putString("points",card.value.toString())
 
@@ -61,8 +63,6 @@ class ScratchCardsAdapter(var mRef: Query, var mContext: Context) : FirebaseRecy
                     ft.add(R.id.frame, frag)
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     ft.commit()
-
-                    card.revealed = true
                 }
             }
 

@@ -2,7 +2,6 @@ package org.aparoksha.app18.ca.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -32,7 +31,7 @@ class UploadsActivity : AppCompatActivity() {
         DBQuery = mFirebaseDB.getReference("users").
                     child(mFirebaseAuth.currentUser!!.uid).child("images")
 
-        uploadsList.layoutManager = GridLayoutManager(this,2)
+        uploadsList.layoutManager = LinearLayoutManager(this)
         uploadsList.adapter = UploadsAdapter(DBQuery,mFirebaseStorage.reference,this)
     }
 }
