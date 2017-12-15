@@ -17,16 +17,6 @@ import org.aparoksha.app18.ca.fragments.NewCardFragment
 
 class ScratchCardsActivity : AppCompatActivity() {
 
-   /* private var pointsRecieved = -1;
-
-    fun getPointsRecieved(): Int {
-        return pointsRecieved
-    }
-
-    fun setPointsRecieved(x: Int) {
-        pointsRecieved = x;
-    }*/
-
     private lateinit var mFirebaseDB: FirebaseDatabase
     private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var DBQuery: Query

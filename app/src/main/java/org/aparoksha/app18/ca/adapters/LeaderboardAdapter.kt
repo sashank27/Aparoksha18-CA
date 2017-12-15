@@ -1,7 +1,9 @@
 package org.aparoksha.app18.ca.adapters
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.bumptech.glide.Glide
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.database.Query
 import kotlinx.android.synthetic.main.layout_leaderboard_member.view.*
@@ -30,6 +32,11 @@ class LeaderboardAdapter(mRef : Query) : FirebaseRecyclerAdapter<User, Leaderboa
             mView.username.text = user.name;
             mView.score.text = user.score.toString()
             mView.rank.text = (position+1).toString()
+
+            if(user.gender.equals("female"))
+                mView.profile.setImageResource(R.drawable.ic_user_girl)
+            else
+                mView.profile.setImageResource(R.drawable.ic_user_boy)
         }
 
     }

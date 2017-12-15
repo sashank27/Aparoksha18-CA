@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Query
 import kotlinx.android.synthetic.main.cards_container.view.*
 import org.aparoksha.app18.ca.R
@@ -20,7 +20,7 @@ import org.aparoksha.app18.ca.models.Card
  * Created by sashank on 13/12/17.
  */
 
-class ScratchCardsAdapter(var mRef: Query, var mContext: Context) : FirebaseRecyclerAdapter<Card, ScratchCardsAdapter.ScratchCardsViewHolder>(
+class ScratchCardsAdapter(mRef: Query, var mContext: Context) : FirebaseRecyclerAdapter<Card, ScratchCardsAdapter.ScratchCardsViewHolder>(
         Card::class.java,
         R.layout.cards_container,
         ScratchCardsViewHolder::class.java,
@@ -29,14 +29,15 @@ class ScratchCardsAdapter(var mRef: Query, var mContext: Context) : FirebaseRecy
 
     override fun populateViewHolder(viewHolder: ScratchCardsViewHolder?, model: Card?, position: Int) {
         if (model != null) {
-            viewHolder?.bindView(model, mContext, mRef, position)
+            viewHolder?.bindView(model, mContext, this.getRef(position))
         }
     }
 
 
+
     class ScratchCardsViewHolder(private var mView: View) : RecyclerView.ViewHolder(mView) {
 
-        fun bindView(card: Card, mContext: Context, mRef: Query, position: Int) {
+        fun bindView(card: Card, mContext: Context, ref: DatabaseReference) {
 
             if(card.revealed){
                 Glide.with(mContext)
@@ -54,6 +55,7 @@ class ScratchCardsAdapter(var mRef: Query, var mContext: Context) : FirebaseRecy
                 mView.setOnClickListener {
                     val ft = (mContext as AppCompatActivity).supportFragmentManager.beginTransaction()
                     mContext.window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+
                     val bundle = Bundle()
                     bundle.putString("points",card.value.toString())
 
@@ -63,9 +65,11 @@ class ScratchCardsAdapter(var mRef: Query, var mContext: Context) : FirebaseRecy
                     ft.add(R.id.frame, frag)
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     ft.commit()
+
+                    ref.child("revealed").setValue(true)
+
                 }
             }
-
         }
     }
 }

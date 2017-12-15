@@ -32,7 +32,7 @@ public class NewCardFragment extends Fragment {
     ScratchView mScratchView;
     LottieAnimationView animationView;
     FrameLayout cardFrame;
-    private int points;
+    private int points = 0;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,12 +46,12 @@ public class NewCardFragment extends Fragment {
         mScratchView = view.findViewById(R.id.scratch_view);
         animationView = view.findViewById(R.id.animationView);
         cardFrame = view.findViewById(R.id.card_frame);
-        points = Integer.parseInt(this.getArguments().get("points").toString());
+        if(this.getArguments().get("points") != null)
+            points = Integer.parseInt(this.getArguments().get("points").toString());
 
         mScratchView.setMaxPercent(40);
         mScratchView.setEraserSize(100.0F);
-        mScratchView.setMaskColor(R.color.fui_bgFacebook);
-        mScratchView.setWatermark(R.drawable.ic_demo_user);
+        mScratchView.setWatermark(R.drawable.ic_logo);
 
         mScratchView.setEraseStatusListener(new ScratchView.EraseStatusListener() {
             @Override

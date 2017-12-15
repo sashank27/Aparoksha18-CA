@@ -30,19 +30,20 @@ import org.aparoksha.app18.ca.models.Image
 import pl.tajchert.nammu.Nammu
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
     private lateinit var mStorageReference: StorageReference
     private lateinit var mFirebaseStorage: FirebaseStorage
     private lateinit var mFirebaseDB: FirebaseDatabase
     private lateinit var mDBReference: DatabaseReference
-    private val RC_SIGN_IN = 1
     private lateinit var dbData: Data
+
+    private val RC_SIGN_IN = 1
     private val RC_PHOTO_PICKER = 2
     private val CAMERA_REQUEST = 3
-    private val RC_NEW_CARD = 4
-    private val DETAILS_REQUEST = 5
-    private val ERROR_Activity = 6
+    private val DETAILS_REQUEST = 4
+    private val ERROR_ACTIVITY = 5
 
     private fun initDB() {
         dbData = Data()
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         scratch.setOnClickListener({
             val cards = Intent(this, ScratchCardsActivity::class.java)
-            startActivityForResult(cards, RC_NEW_CARD)
+            startActivity(cards)
         })
 
         mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
@@ -106,18 +107,20 @@ class MainActivity : AppCompatActivity() {
         if (mFirebaseAuth.currentUser != null) {
             mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
             mDBReference.keepSynced(true)
+
             if(mFirebaseAuth.currentUser!!.email != null) {
                 user.text = mFirebaseAuth.currentUser!!.email
             } else {
                 user.text = mFirebaseAuth.currentUser!!.phoneNumber
             }
+
             mDBReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.value != null) {
                         dbData = p0.getValue(Data::class.java)!!
                         if(!dbData.accountVerified) {
                             val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
-                            startActivityForResult(i,ERROR_Activity)
+                            startActivityForResult(i,ERROR_ACTIVITY)
                         }
                     } else {
                         val i = Intent(this@MainActivity,DetailsActivity::class.java)
@@ -127,17 +130,6 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onCancelled(p0: DatabaseError?) {
                     //To change body of created functions use File | Settings | File Templates
-                }
-            })
-
-            mDBReference.child("totalPoints").addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(p0: DataSnapshot?) {
-                    //pointsValue.text = p0?.value.toString()
-
-                }
-
-                override fun onCancelled(p0: DatabaseError?) {
-                    //To change body of created functions use File | Settings | File Templates.
                 }
             })
         } else {
@@ -160,7 +152,7 @@ class MainActivity : AppCompatActivity() {
             user.text = ""
             return true
         } else if(item.itemId == R.id.uploadedImages) {
-            var i = Intent(this,UploadsActivity::class.java)
+            val i = Intent(this,UploadsActivity::class.java)
             startActivity(i)
         }
         return super.onOptionsItemSelected(item)
@@ -168,25 +160,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == Activity.RESULT_OK) {
                 toast("Signed In")
+
                 if(mFirebaseAuth.currentUser!!.email != null) {
                     user.text = mFirebaseAuth.currentUser!!.email
                 } else {
                     user.text = mFirebaseAuth.currentUser!!.phoneNumber
                 }
+
                 if (mFirebaseAuth.currentUser != null) {
                     mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
                     mDBReference.keepSynced(true)
                 }
+
                 mDBReference.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(p0: DataSnapshot) {
                         if (p0.value != null) {
                             dbData = p0.getValue(Data::class.java)!!
                             if(!dbData.accountVerified) {
                                 val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
-                                startActivityForResult(i,ERROR_Activity)
+                                startActivityForResult(i,ERROR_ACTIVITY)
                             }
                         } else {
                             dbData = Data()
@@ -203,7 +199,9 @@ class MainActivity : AppCompatActivity() {
                 toast("Sign In Cancelled")
                 finish()
             }
-        } else if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
+        }
+
+        else if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val selectedImageUri = data!!.data
@@ -221,7 +219,9 @@ class MainActivity : AppCompatActivity() {
                     toast("Failed")
                 }
             }
-        } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+        }
+
+        else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val extras = data!!.extras
@@ -241,23 +241,15 @@ class MainActivity : AppCompatActivity() {
                     toast("Failed")
                 }
             }
-        } else if (requestCode == RC_NEW_CARD && resultCode == Activity.RESULT_OK) {
-            if (mFirebaseAuth.currentUser!!.email == null) {
-                mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.phoneNumber)
-            } else {
-                mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.email)
-            }
+        }
 
-            mDBReference.child("revealedCount").setValue(0)
-            mDBReference.child("count").setValue(0)
+        else if (requestCode == DETAILS_REQUEST) {
 
-            dbData.totalPoints += data!!.data.toString().toLong()
-            mDBReference.child("totalPoints").setValue(dbData.totalPoints)
-        } else if (requestCode == DETAILS_REQUEST) {
             if(data == null) {
                 val i = Intent(this@MainActivity,DetailsActivity::class.java)
                 startActivityForResult(i,DETAILS_REQUEST)
-            } else {
+            }
+            else {
                 val extras = data.extras
                 dbData.collegeName = extras.get("collegeName").toString()
                 dbData.userName = extras.get("userName").toString()
@@ -267,6 +259,7 @@ class MainActivity : AppCompatActivity() {
                 mDBReference.child("collegeName").setValue(dbData.collegeName)
                 mDBReference.child("fullName").setValue(dbData.fullName)
                 mDBReference.child("userName").setValue(dbData.userName)
+
                 if (mFirebaseAuth.currentUser!!.email == null) {
                     mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.phoneNumber)
                     user.text = mFirebaseAuth.currentUser!!.phoneNumber
@@ -274,17 +267,21 @@ class MainActivity : AppCompatActivity() {
                     mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.email)
                     user.text = mFirebaseAuth.currentUser!!.email
                 }
+
                 mDBReference.child("revealedCount").setValue(0)
                 mDBReference.child("totalPoints").setValue(0)
                 mDBReference.child("count").setValue(0)
                 mDBReference.child("accountVerified").setValue(false)
+
                 val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
-                startActivityForResult(i,ERROR_Activity)
+                startActivityForResult(i,ERROR_ACTIVITY)
             }
-        } else if(requestCode == ERROR_Activity) {
+        }
+
+        else if(requestCode == ERROR_ACTIVITY) {
             if(!dbData.accountVerified) {
                 val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
-                startActivityForResult(i,ERROR_Activity)
+                startActivityForResult(i,ERROR_ACTIVITY)
             }
         }
     }

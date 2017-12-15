@@ -5,5 +5,6 @@ package org.aparoksha.app18.ca.models
  */
 data class User (
         var name : String = "",
-        var score : Long = 0
+        var score : Long = 0 ,
+        var gender : String = ""
 )

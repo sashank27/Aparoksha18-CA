@@ -37,9 +37,8 @@
             android:layout_centerHorizontal="true"
             android:elevation="0dp"
             android:padding="30dp"
-            android:text="Get your Scratch Card"
+            android:text="View your Scratch Cards"
             android:textColor="@android:color/black" />
-
 
         <ProgressBar
             android:id="@+id/totalProgress"
@@ -47,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/imageView"
+            android:layout_below="@+id/profile"
             android:layout_marginTop="25dp"
             android:progress="25"
             android:scaleY="8" />
@@ -105,8 +104,8 @@
             android:textStyle="bold"
             android:text="25 / 100" />
 
-        <ImageView
-            android:id="@+id/imageView"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentTop="true"
