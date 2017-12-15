@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="22dp"
+        android:layout_weight=".1"
+        android:gravity="center"
+        android:text="Scrath Cards"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:textStyle="normal" />
+
+    <ImageView
+        android:id="@+id/connect_jmi"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".7"
+        android:src="@drawable/intro4" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".2"
+        android:gravity="center_horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Here you can see all the scratch cards you won."
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="normal" />
+
+</LinearLayout>

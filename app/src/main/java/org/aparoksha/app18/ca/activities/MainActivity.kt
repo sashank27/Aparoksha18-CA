@@ -108,16 +108,11 @@ class MainActivity : AppCompatActivity() {
             mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
             mDBReference.keepSynced(true)
 
-            if(mFirebaseAuth.currentUser!!.email != null) {
-                user.text = mFirebaseAuth.currentUser!!.email
-            } else {
-                user.text = mFirebaseAuth.currentUser!!.phoneNumber
-            }
-
             mDBReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.value != null) {
                         dbData = p0.getValue(Data::class.java)!!
+                        user.text = dbData.userName
                         if(!dbData.accountVerified) {
                             val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
                             startActivityForResult(i,ERROR_ACTIVITY)
@@ -132,6 +127,9 @@ class MainActivity : AppCompatActivity() {
                     //To change body of created functions use File | Settings | File Templates
                 }
             })
+
+            user.text = dbData.userName
+
         } else {
             AuthUI.getInstance().signOut(this)
         }
@@ -165,12 +163,6 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 toast("Signed In")
 
-                if(mFirebaseAuth.currentUser!!.email != null) {
-                    user.text = mFirebaseAuth.currentUser!!.email
-                } else {
-                    user.text = mFirebaseAuth.currentUser!!.phoneNumber
-                }
-
                 if (mFirebaseAuth.currentUser != null) {
                     mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
                     mDBReference.keepSynced(true)
@@ -180,6 +172,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onDataChange(p0: DataSnapshot) {
                         if (p0.value != null) {
                             dbData = p0.getValue(Data::class.java)!!
+                            user.text = dbData.userName
                             if(!dbData.accountVerified) {
                                 val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
                                 startActivityForResult(i,ERROR_ACTIVITY)
@@ -194,6 +187,7 @@ class MainActivity : AppCompatActivity() {
                         //To change body of created functions use File | Settings | File Templates.
                     }
                 })
+                user.text = mFirebaseAuth.currentUser!!.email
 
             } else {
                 toast("Sign In Cancelled")
@@ -259,26 +253,21 @@ class MainActivity : AppCompatActivity() {
                 mDBReference.child("collegeName").setValue(dbData.collegeName)
                 mDBReference.child("fullName").setValue(dbData.fullName)
                 mDBReference.child("userName").setValue(dbData.userName)
-
+                user.text = dbData.userName
                 if (mFirebaseAuth.currentUser!!.email == null) {
                     mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.phoneNumber)
-                    user.text = mFirebaseAuth.currentUser!!.phoneNumber
                 } else {
                     mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.email)
-                    user.text = mFirebaseAuth.currentUser!!.email
                 }
 
                 mDBReference.child("revealedCount").setValue(0)
                 mDBReference.child("totalPoints").setValue(0)
                 mDBReference.child("count").setValue(0)
                 mDBReference.child("accountVerified").setValue(false)
-
                 val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
                 startActivityForResult(i,ERROR_ACTIVITY)
             }
-        }
-
-        else if(requestCode == ERROR_ACTIVITY) {
+        } else if(requestCode == ERROR_ACTIVITY) {
             if(!dbData.accountVerified) {
                 val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
                 startActivityForResult(i,ERROR_ACTIVITY)
@@ -306,11 +295,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if(mFirebaseAuth.currentUser != null) {
-            if (mFirebaseAuth.currentUser!!.email != null) {
-                user.text = mFirebaseAuth.currentUser!!.email
-            } else {
-                user.text = mFirebaseAuth.currentUser!!.phoneNumber
-            }
+            user.text = dbData.userName
         }
         mFirebaseAuth.addAuthStateListener(mAuthStateListener)
     }
