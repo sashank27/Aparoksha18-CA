@@ -1,5 +1,6 @@
 package org.aparoksha.app18.ca.activities
 
+import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
@@ -16,8 +17,12 @@ import org.jetbrains.anko.toast
 import java.util.*
 import android.graphics.Bitmap
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.MediaStore.Images
+import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import com.google.firebase.database.*
 import org.aparoksha.app18.ca.models.Data
 import org.aparoksha.app18.ca.R
@@ -27,7 +32,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
 import org.aparoksha.app18.ca.DetailsActivity
 import org.aparoksha.app18.ca.models.Image
-import pl.tajchert.nammu.Nammu
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     private val CAMERA_REQUEST = 3
     private val DETAILS_REQUEST = 4
     private val ERROR_ACTIVITY = 5
+    private val PERMISSIONS_CAMERA_STORAGE_REQUEST = 12
 
     private fun initDB() {
         dbData = Data()
@@ -67,8 +72,35 @@ class MainActivity : AppCompatActivity() {
         camera.setOnClickListener({
             if (fab_menu.isOpened)
                 fab_menu.close(true)
-            val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(cameraIntent, CAMERA_REQUEST)
+
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) + ContextCompat
+                    .checkSelfPermission(this,
+                            Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        || ActivityCompat.shouldShowRequestPermissionRationale(
+                        this, Manifest.permission.CAMERA)) {
+
+                    Snackbar.make(this.findViewById(android.R.id.content),
+                            "Please Grant Permissions to capture and upload photos",
+                            Snackbar.LENGTH_LONG).setAction("ENABLE")
+                    {
+                        ActivityCompat.requestPermissions(
+                                this,arrayOf(Manifest.permission
+                                .WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
+                                PERMISSIONS_CAMERA_STORAGE_REQUEST)
+                    }.show()
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA),
+                            PERMISSIONS_CAMERA_STORAGE_REQUEST)
+                }
+            } else {
+                val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(cameraIntent, CAMERA_REQUEST)
+            }
         })
 
         scratch.setOnClickListener({
@@ -98,7 +130,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Nammu.init(applicationContext)
         initDB()
         setListeners()
 
@@ -133,10 +164,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             AuthUI.getInstance().signOut(this)
         }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        Nammu.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -305,5 +332,28 @@ class MainActivity : AppCompatActivity() {
             fab_menu.close(true)
         else
             super.onBackPressed()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            PERMISSIONS_CAMERA_STORAGE_REQUEST -> if (grantResults.isNotEmpty()) {
+                val cameraPermission = (grantResults[1] == PackageManager.PERMISSION_GRANTED)
+                val readExternalFile = (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                if (cameraPermission && readExternalFile) {
+                    val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST)
+                } else {
+                    Snackbar.make(this.findViewById(android.R.id.content),
+                            "Please Grant Permissions to capture and upload photos",
+                            Snackbar.LENGTH_LONG).setAction("ENABLE"
+                    ) {
+                        ActivityCompat.requestPermissions(
+                                this,arrayOf(Manifest.permission
+                                .WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
+                                PERMISSIONS_CAMERA_STORAGE_REQUEST)
+                    }.show()
+                }
+            }
+        }
     }
 }
