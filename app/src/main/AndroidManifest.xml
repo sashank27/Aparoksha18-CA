@@ -22,7 +22,7 @@
         <activity android:name=".activities.UploadsActivity" />
         <activity android:name=".activities.UnverifiedActivity" />
         <activity android:name=".activities.WelcomeActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            android:theme="@style/Theme.Intro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
