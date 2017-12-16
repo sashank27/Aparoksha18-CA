@@ -15,6 +15,6 @@ class UnverifiedActivity : AppCompatActivity() {
 
         textView3.text = "Contact Team Aparoksha"
 
-        textView4.text = "Your account is not verified yet.Contact team Aparoksha to get it verified ASAP."
+        textView4.text = "Your account is not verified yet. Contact team Aparoksha to get it verified."
     }
 }

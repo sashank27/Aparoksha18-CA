@@ -20,12 +20,14 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+/*
         if (Build.VERSION.SDK_INT >= 21) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
+*/
         setContentView(R.layout.activity_welcome)
 
         title = ""
@@ -33,11 +35,11 @@ class WelcomeActivity : AppCompatActivity() {
         layouts = intArrayOf(R.layout.welcome_slide1, R.layout.welcome_slide2, R.layout.welcome_slide3, R.layout.welcome_slide4)
 
         val myViewPagerAdapter = MyViewPagerAdapter()
-        pager!!.adapter = myViewPagerAdapter
-        pager!!.addOnPageChangeListener(viewPagerPageChangeListener)
+        pager.adapter = myViewPagerAdapter
+        pager.addOnPageChangeListener(viewPagerPageChangeListener)
 
-        btn_skip!!.setOnClickListener { launchHomeScreen() }
-        btn_next!!.setOnClickListener(View.OnClickListener {
+        btn_skip.setOnClickListener { launchHomeScreen() }
+        btn_next.setOnClickListener({
             // checking for last page
             // if last page home screen will be launched
             val current = getItem(1)
@@ -51,7 +53,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun getItem(i: Int): Int {
-        return pager!!.currentItem + i
+        return pager.currentItem + i
     }
 
     private fun launchHomeScreen() {
@@ -63,11 +65,11 @@ class WelcomeActivity : AppCompatActivity() {
 
         override fun onPageSelected(position: Int) {
             if (position == layouts!!.size - 1) {
-                btn_next!!.setText("Got It")
-                btn_skip!!.visibility = View.GONE
+                btn_next.text = "Got It"
+                btn_skip.visibility = View.GONE
             } else {
-                btn_next!!.setText("Next")
-                btn_skip!!.visibility = View.VISIBLE
+                btn_next.text = "Next"
+                btn_skip.visibility = View.VISIBLE
             }
         }
 
@@ -94,9 +96,7 @@ class WelcomeActivity : AppCompatActivity() {
             return layouts!!.size
         }
 
-        override fun isViewFromObject(view: View, obj: Any): Boolean {
-            return view == obj
-        }
+        override fun isViewFromObject(view: View, obj: Any) = view == obj
 
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
             val view = `object` as View
