@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">APK \'18 Campus Ambassador</string>
+    <string name="sign_in_slide_detail">Sign up using either your Google account or mobile number, and get the account verified by Team Aparoksha</string>
+    <string name="upload_slide_detail">Easily upload files, either from storage or through direct capture</string>
+    <string name="uploaded_slide_detail">Keep a track of the files you\'ve uploaded, while they get verified by us. Receive points and increase your XP!!</string>
+    <string name="scratch_card_slide_detail">Reach a new level, and get a Bonus Scratch Card, which may fetch you even more points!</string>
+    <string name="permission_slide_detail">Permissions are required to use camera and gallery to upload pictures.</string>
+    <string name="sign_in_slide_title">Easy Login</string>
+    <string name="upload_slide_title">Upload Files</string>
+    <string name="uploaded_slide_title">View your Photos</string>
+    <string name="scratch_card_slide_title">Scratch Cards</string>
+    <string name="permission_slide_title">We need some Permissions</string>
 </resources>

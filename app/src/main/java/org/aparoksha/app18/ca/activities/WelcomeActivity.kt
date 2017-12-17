@@ -11,8 +11,20 @@ import com.heinrichreimersoftware.materialintro.slide.SimpleSlide
 import org.aparoksha.app18.ca.R
 import org.jetbrains.anko.startActivity
 
+data class IntroSlideData(
+        val titleRes: Int,
+        val descriptionRes: Int,
+        val imageRes: Int
+)
 
 class WelcomeActivity : IntroActivity() {
+
+    private val slides = arrayOf<IntroSlideData>(
+            IntroSlideData(R.string.sign_in_slide_title, R.string.sign_in_slide_detail, R.drawable.intro1),
+            IntroSlideData(R.string.upload_slide_title, R.string.upload_slide_detail, R.drawable.intro2),
+            IntroSlideData(R.string.uploaded_slide_title, R.string.uploaded_slide_detail, R.drawable.intro3),
+            IntroSlideData(R.string.scratch_card_slide_title, R.string.scratch_card_slide_detail, R.drawable.intro4)
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         isFullscreen = true
@@ -28,8 +40,8 @@ class WelcomeActivity : IntroActivity() {
         pageScrollDuration = 1000
 
         addSlide(SimpleSlide.Builder()
-                .title("Easy Login")
-                .description("Sign up using either your Google account or mobile number, and get the account verified by Team Aparoksha")
+                .title(getString(R.string.sign_in_slide_title))
+                .description(getString(R.string.sign_in_slide_detail))
                 .image(R.drawable.intro1)
                 .background(android.R.color.white)
                 .backgroundDark(R.color.colorAccent)
@@ -37,8 +49,8 @@ class WelcomeActivity : IntroActivity() {
                 .build())
 
         addSlide(SimpleSlide.Builder()
-                .title("Upload Files")
-                .description("Easily upload files, either from storage or through direct capture")
+                .title(getString(R.string.upload_slide_title))
+                .description(getString(R.string.upload_slide_detail))
                 .image(R.drawable.intro2)
                 .background(android.R.color.white)
                 .backgroundDark(R.color.colorAccent)
@@ -46,8 +58,8 @@ class WelcomeActivity : IntroActivity() {
                 .build())
 
         addSlide(SimpleSlide.Builder()
-                .title("View your Photos")
-                .description("Keep a track of the files you've uploaded, while they get verified by us. Recieve points and increase your XP!!")
+                .title(getString(R.string.uploaded_slide_title))
+                .description(getString(R.string.uploaded_slide_detail))
                 .image(R.drawable.intro3)
                 .background(android.R.color.white)
                 .backgroundDark(R.color.colorAccent)
@@ -55,8 +67,8 @@ class WelcomeActivity : IntroActivity() {
                 .build())
 
         addSlide(SimpleSlide.Builder()
-                .title("Scratch Cards")
-                .description("Reach a new level, and get a Bonus Scratch Card, which may fetch you even more points!")
+                .title(getString(R.string.scratch_card_slide_title))
+                .description(getString(R.string.scratch_card_slide_detail))
                 .image(R.drawable.intro4)
                 .background(android.R.color.white)
                 .backgroundDark(R.color.colorAccent)
@@ -64,11 +76,12 @@ class WelcomeActivity : IntroActivity() {
                 .build())
 
         val permissionsSlide = SimpleSlide.Builder()
-                .title("We need some Permissions")
-                .description("Permissions are required to use camera and gallery to upload pictures.")
+                .title(getString(R.string.permission_slide_title))
+                .description(getString(R.string.permission_slide_detail))
                 .background(android.R.color.white)
                 .backgroundDark(R.color.colorAccent)
                 .scrollable(true)
+                .buttonCtaLabel("Grant Permissions")
                 .buttonCtaClickListener { v->
                     val i = Intent(this@WelcomeActivity,MainActivity::class.java)
                     startActivity(i)

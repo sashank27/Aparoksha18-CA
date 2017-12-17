@@ -75,34 +75,9 @@ class MainActivity : AppCompatActivity() {
             if (fab_menu.isOpened)
                 fab_menu.close(true)
 
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE) + ContextCompat
-                    .checkSelfPermission(this,
-                            Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(cameraIntent, CAMERA_REQUEST)
 
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        || ActivityCompat.shouldShowRequestPermissionRationale(
-                        this, Manifest.permission.CAMERA)) {
-
-                    Snackbar.make(this.findViewById(android.R.id.content),
-                            "Please Grant Permissions to capture and upload photos",
-                            Snackbar.LENGTH_LONG).setAction("ENABLE")
-                    {
-                        ActivityCompat.requestPermissions(
-                                this,arrayOf(Manifest.permission
-                                .WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
-                                PERMISSIONS_CAMERA_STORAGE_REQUEST)
-                    }.show()
-                } else {
-                    ActivityCompat.requestPermissions(this,
-                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA),
-                            PERMISSIONS_CAMERA_STORAGE_REQUEST)
-                }
-            } else {
-                val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(cameraIntent, CAMERA_REQUEST)
-            }
         })
 
         scratch.setOnClickListener({
@@ -129,15 +104,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchInitialsTotalProgress() {
-        mLeaderboardRef.addListenerForSingleValueEvent(object: ValueEventListener {
+        mLeaderboardRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot?) {
-                if(p0 != null) {
+                if (p0 != null) {
                     p0.children.mapNotNullTo(list) {
                         it.getValue<User>(User::class.java)
                     }
-                    var max:Long = 0
+                    var max: Long = 0
                     for (e in list) {
-                        max = maxOf(e.score,max)
+                        max = maxOf(e.score, max)
                     }
                     val myRef = mFirebaseDB.getReference("leaderboard").child(mFirebaseAuth.currentUser!!.uid)
                     myRef.addValueEventListener(object : ValueEventListener {
@@ -148,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                                     if (myPoints.score == 0L) {
                                         totalProgress.progress = 0
                                     } else {
-                                        totalProgress.progress = (myPoints.score*100/max).toInt()
+                                        totalProgress.progress = (myPoints.score * 100 / max).toInt()
                                     }
                                     pointsText.text = myPoints.score.toString() + " / " + max.toString()
                                     main.visibility = View.VISIBLE
@@ -156,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                                 }
                             } else {
                                 totalProgress.progress = 0
-                                pointsText.text = "0 / "+ max
+                                pointsText.text = "0 / " + max
                                 main.visibility = View.VISIBLE
                                 dialog.dismiss()
                             }
@@ -181,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         main.visibility = View.INVISIBLE
-        dialog = ProgressDialog.show(this,"Fetching Data","Loading...")
+        dialog = ProgressDialog.show(this, "Fetching Data", "Loading...")
         initDB()
         setListeners()
 
@@ -199,8 +174,8 @@ class MainActivity : AppCompatActivity() {
                         dbData = p0.getValue(Data::class.java)!!
                         user.text = dbData.userName
                         scratchcardxp.max = 8
-                        scratchcardxp.progress = (((dbData.totalPoints % 200) /25 ) % 8L).toInt()
-                        if(!dbData.accountVerified) {
+                        scratchcardxp.progress = (((dbData.totalPoints % 200) / 25) % 8L).toInt()
+                        if (!dbData.accountVerified) {
                             val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -208,8 +183,8 @@ class MainActivity : AppCompatActivity() {
                             finish()
                         }
                     } else {
-                        val i = Intent(this@MainActivity,DetailsActivity::class.java)
-                        startActivityForResult(i,DETAILS_REQUEST)
+                        val i = Intent(this@MainActivity, DetailsActivity::class.java)
+                        startActivityForResult(i, DETAILS_REQUEST)
                     }
                 }
 
@@ -245,8 +220,8 @@ class MainActivity : AppCompatActivity() {
             user.text = ""
             finish()
             return true
-        } else if(item.itemId == R.id.uploadedImages) {
-            val i = Intent(this,UploadsActivity::class.java)
+        } else if (item.itemId == R.id.uploadedImages) {
+            val i = Intent(this, UploadsActivity::class.java)
             startActivity(i)
         }
         return super.onOptionsItemSelected(item)
@@ -270,8 +245,8 @@ class MainActivity : AppCompatActivity() {
                             dbData = p0.getValue(Data::class.java)!!
                             user.text = dbData.userName
                             scratchcardxp.max = 8
-                            scratchcardxp.progress = (((dbData.totalPoints % 200) /25 ) % 8L).toInt()
-                            if(!dbData.accountVerified) {
+                            scratchcardxp.progress = (((dbData.totalPoints % 200) / 25) % 8L).toInt()
+                            if (!dbData.accountVerified) {
                                 val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -280,10 +255,11 @@ class MainActivity : AppCompatActivity() {
                             }
                         } else {
                             dbData = Data()
-                            val i = Intent(this@MainActivity,DetailsActivity::class.java)
-                            startActivityForResult(i,DETAILS_REQUEST)
+                            val i = Intent(this@MainActivity, DetailsActivity::class.java)
+                            startActivityForResult(i, DETAILS_REQUEST)
                         }
                     }
+
                     override fun onCancelled(p0: DatabaseError?) {
                         //To change body of created functions use File | Settings | File Templates.
                     }
@@ -305,9 +281,7 @@ class MainActivity : AppCompatActivity() {
                 toast("Sign In Cancelled")
                 finish()
             }
-        }
-
-        else if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val selectedImageUri = data!!.data
@@ -317,17 +291,14 @@ class MainActivity : AppCompatActivity() {
                 val photoRef = idReference.child(System.currentTimeMillis().toString())
                 photoRef.putFile(selectedImageUri).addOnSuccessListener(this) {
                     pd.dismiss()
-                    mDBReference.child("images").child(dbData.count.toString()).setValue(Image(photoRef.path,false))
-                    updateScore()
+                    mDBReference.child("images").push().setValue(Image(photoRef.path, false))
                     toast("Successfully Uploaded")
                 }.addOnFailureListener(this) {
                     pd.dismiss()
                     toast("Failed")
                 }
             }
-        }
-
-        else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val extras = data!!.extras
@@ -339,22 +310,18 @@ class MainActivity : AppCompatActivity() {
                 val photoRef = idReference.child(System.currentTimeMillis().toString())
                 photoRef.putFile(selectedImageUri).addOnSuccessListener(this) {
                     pd.dismiss()
-                    mDBReference.child("images").child(dbData.count.toString()).setValue(Image(photoRef.path,false))
-                    updateScore()
+                    mDBReference.child("images").push().setValue(Image(photoRef.path, false))
                     toast("Successfully Uploaded")
                 }.addOnFailureListener(this) {
                     pd.dismiss()
                     toast("Failed")
                 }
             }
-        }
+        } else if (requestCode == DETAILS_REQUEST) {
 
-        else if (requestCode == DETAILS_REQUEST) {
-
-            if(data == null) {
+            if (data == null) {
                 finish()
-            }
-            else {
+            } else {
                 val extras = data.extras
                 dbData.collegeName = extras.get("collegeName").toString()
                 dbData.userName = extras.get("userName").toString()
@@ -385,11 +352,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateScore() {
-        dbData.count++
-        mDBReference.child("count").setValue(dbData.count)
-    }
-
     private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -404,39 +366,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if(mFirebaseAuth.currentUser != null) {
+        if (mFirebaseAuth.currentUser != null) {
             user.text = dbData.userName
         }
         mFirebaseAuth.addAuthStateListener(mAuthStateListener)
     }
 
     override fun onBackPressed() {
-        if(fab_menu.isOpened)
+        if (fab_menu.isOpened)
             fab_menu.close(true)
         else
             super.onBackPressed()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            PERMISSIONS_CAMERA_STORAGE_REQUEST -> if (grantResults.isNotEmpty()) {
-                val cameraPermission = (grantResults[1] == PackageManager.PERMISSION_GRANTED)
-                val readExternalFile = (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                if (cameraPermission && readExternalFile) {
-                    val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST)
-                } else {
-                    Snackbar.make(this.findViewById(android.R.id.content),
-                            "Please Grant Permissions to capture and upload photos",
-                            Snackbar.LENGTH_LONG).setAction("ENABLE"
-                    ) {
-                        ActivityCompat.requestPermissions(
-                                this,arrayOf(Manifest.permission
-                                .WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
-                                PERMISSIONS_CAMERA_STORAGE_REQUEST)
-                    }.show()
-                }
-            }
-        }
     }
 }

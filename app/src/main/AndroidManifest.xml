@@ -16,7 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.ScratchCardsActivity" />
         <activity android:name=".DetailsActivity" />
@@ -24,11 +23,7 @@
         <activity android:name=".activities.UnverifiedActivity" />
         <activity
             android:name=".activities.WelcomeActivity"
-            android:theme="@style/Theme.Intro"/>
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+            android:theme="@style/Theme.Intro" />
 
         <activity android:name=".activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
@@ -38,6 +33,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>
