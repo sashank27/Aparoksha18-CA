@@ -16,18 +16,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity"/>
+        <activity android:name=".activities.MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".activities.ScratchCardsActivity" />
         <activity android:name=".DetailsActivity" />
         <activity android:name=".activities.UploadsActivity" />
         <activity android:name=".activities.UnverifiedActivity" />
         <activity android:name=".activities.WelcomeActivity"
             android:theme="@style/Theme.Intro">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data

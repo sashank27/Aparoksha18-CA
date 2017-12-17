@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun fetchInitialsTotalProgress() {
+    private fun fetchInitialsTotalProgress() {
         mLeaderboardRef.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(p0: DataSnapshot?) {
                 if(p0 != null) {
@@ -207,8 +207,11 @@ class MainActivity : AppCompatActivity() {
                         scratchcardxp.max = 8
                         scratchcardxp.progress = (((dbData.totalPoints % 200) /25 ) % 8L).toInt()
                         if(!dbData.accountVerified) {
-                            val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
-                            startActivityForResult(i,ERROR_ACTIVITY)
+                            val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+                            finish()
                         }
                     } else {
                         val i = Intent(this@MainActivity,DetailsActivity::class.java)
@@ -246,6 +249,7 @@ class MainActivity : AppCompatActivity() {
         if (item.itemId == R.id.logout) {
             AuthUI.getInstance().signOut(this)
             user.text = ""
+            finish()
             return true
         } else if(item.itemId == R.id.uploadedImages) {
             val i = Intent(this,UploadsActivity::class.java)
@@ -274,8 +278,11 @@ class MainActivity : AppCompatActivity() {
                             scratchcardxp.max = 8
                             scratchcardxp.progress = (((dbData.totalPoints % 200) /25 ) % 8L).toInt()
                             if(!dbData.accountVerified) {
-                                val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
-                                startActivityForResult(i,ERROR_ACTIVITY)
+                                val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(intent)
+                                finish()
                             }
                         } else {
                             dbData = Data()
@@ -374,11 +381,11 @@ class MainActivity : AppCompatActivity() {
                 mDBReference.child("totalPoints").setValue(0)
                 mDBReference.child("count").setValue(0)
                 mDBReference.child("accountVerified").setValue(false)
-                val i = Intent(this@MainActivity,UnverifiedActivity::class.java)
-                startActivityForResult(i,ERROR_ACTIVITY)
-            }
-        } else if(requestCode == ERROR_ACTIVITY) {
-            if(!dbData.accountVerified) {
+
+                val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
                 finish()
             }
         }
