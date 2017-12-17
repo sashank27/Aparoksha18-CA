@@ -1,29 +1,15 @@
 package org.aparoksha.app18.ca.activities
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.design.widget.TabLayout
-import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewPager
-import android.view.*
-import android.widget.Button
-
-import com.heinrichreimersoftware.materialintro.app.IntroActivity
-import com.heinrichreimersoftware.materialintro.slide.SimpleSlide
-import kotlinx.android.synthetic.main.activity_welcome.*
-import org.aparoksha.app18.ca.R
 import android.support.design.widget.Snackbar
-import com.heinrichreimersoftware.materialintro.app.OnNavigationBlockedListener
-import android.text.Spanned
-import android.text.SpannableString
-import android.util.Log
+import android.view.View
+import com.heinrichreimersoftware.materialintro.app.IntroActivity
 import com.heinrichreimersoftware.materialintro.app.NavigationPolicy
-import org.jetbrains.anko.toast
+import com.heinrichreimersoftware.materialintro.slide.SimpleSlide
+import org.aparoksha.app18.ca.R
+import org.jetbrains.anko.startActivity
 
 
 class WelcomeActivity : IntroActivity() {
@@ -46,7 +32,7 @@ class WelcomeActivity : IntroActivity() {
                 .description("Sign up using either your Google account or mobile number, and get the account verified by Team Aparoksha")
                 .image(R.drawable.intro1)
                 .background(android.R.color.white)
-                .backgroundDark(R.color.bright_foreground_disabled_material_dark)
+                .backgroundDark(R.color.colorAccent)
                 .scrollable(true)
                 .build())
 
@@ -55,7 +41,7 @@ class WelcomeActivity : IntroActivity() {
                 .description("Easily upload files, either from storage or through direct capture")
                 .image(R.drawable.intro2)
                 .background(android.R.color.white)
-                .backgroundDark(R.color.bright_foreground_disabled_material_dark)
+                .backgroundDark(R.color.colorAccent)
                 .scrollable(true)
                 .build())
 
@@ -64,7 +50,7 @@ class WelcomeActivity : IntroActivity() {
                 .description("Keep a track of the files you've uploaded, while they get verified by us. Recieve points and increase your XP!!")
                 .image(R.drawable.intro3)
                 .background(android.R.color.white)
-                .backgroundDark(R.color.bright_foreground_disabled_material_dark)
+                .backgroundDark(R.color.colorAccent)
                 .scrollable(true)
                 .build())
 
@@ -73,15 +59,15 @@ class WelcomeActivity : IntroActivity() {
                 .description("Reach a new level, and get a Bonus Scratch Card, which may fetch you even more points!")
                 .image(R.drawable.intro4)
                 .background(android.R.color.white)
-                .backgroundDark(R.color.bright_foreground_disabled_material_dark)
+                .backgroundDark(R.color.colorAccent)
                 .scrollable(true)
                 .build())
 
         val permissionsSlide = SimpleSlide.Builder()
                 .title("We need some Permissions")
-                .description("Permissions are required so as to succesfully capture images from camera and upload them")
+                .description("Permissions are required to use camera and gallery to upload pictures.")
                 .background(android.R.color.white)
-                .backgroundDark(R.color.bright_foreground_disabled_material_dark)
+                .backgroundDark(R.color.colorAccent)
                 .scrollable(true)
                 .buttonCtaClickListener { v->
                     val i = Intent(this@WelcomeActivity,MainActivity::class.java)
@@ -99,7 +85,7 @@ class WelcomeActivity : IntroActivity() {
         val last = SimpleSlide.Builder()
                 .title("WELCOME")
                 .background(android.R.color.white)
-                .backgroundDark(R.color.bright_foreground_disabled_material_dark)
+                .backgroundDark(R.color.colorAccent)
                 .build()
 
         addSlide(last)
@@ -107,8 +93,7 @@ class WelcomeActivity : IntroActivity() {
         setNavigationPolicy(object : NavigationPolicy {
             override fun canGoForward(position: Int): Boolean {
                 if(getSlide(position) == last){
-                    val i = Intent(this@WelcomeActivity,MainActivity::class.java)
-                    startActivity(i)
+                    this@WelcomeActivity.startActivity<MainActivity>()
                     finish()
                 }
                 return true

@@ -25,6 +25,7 @@ class DetailsActivity : AppCompatActivity() {
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 } else {
+
                     val intent = intent
                     intent.putExtra("fullName", fullName.text)
                     intent.putExtra("collegeName", collegeName.text)

@@ -134,8 +134,8 @@
         android:layout_alignParentEnd="true"
         android:paddingBottom="16dp"
         android:paddingEnd="16dp"
-        fab:fab_colorNormal="#DA4336"
-        fab:fab_colorPressed="#E75043"
+        fab:fab_colorNormal="@color/colorAccent"
+        fab:fab_colorPressed="@color/colorAccentDark"
         fab:fab_colorRipple="#99FFFFFF"
         fab:fab_shadowColor="#000000"
         fab:fab_showShadow="true"
@@ -155,7 +155,7 @@
             android:id="@+id/camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_camera_black_24dp"
+            android:src="@drawable/ic_camera"
             fab:fab_label="Upload from Camera"
             fab:fab_size="mini" />
 
@@ -163,7 +163,7 @@
             android:id="@+id/upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_photo_library_black_24dp"
+            android:src="@drawable/ic_photo"
             fab:fab_label="Upload from Storage"
             fab:fab_size="mini" />
 
