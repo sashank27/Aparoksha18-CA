@@ -1,12 +1,13 @@
-package org.aparoksha.app18.ca
+package org.aparoksha.app18.ca.activities
 
 import android.app.Activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.activity_details.view.*
+import org.aparoksha.app18.ca.R
 
-class DetailsActivity : AppCompatActivity() {
+class EnterDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

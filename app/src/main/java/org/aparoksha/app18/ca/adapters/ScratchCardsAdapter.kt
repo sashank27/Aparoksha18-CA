@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import com.bumptech.glide.Glide
 import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.Query
 import kotlinx.android.synthetic.main.cards_container.view.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.fragments.NewCardFragment
@@ -20,33 +22,29 @@ import org.aparoksha.app18.ca.models.Card
  * Created by sashank on 13/12/17.
  */
 
-class ScratchCardsAdapter(mRef: Query, var mContext: Context) : FirebaseRecyclerAdapter<Card, ScratchCardsAdapter.ScratchCardsViewHolder>(
-        Card::class.java,
-        R.layout.cards_container,
-        ScratchCardsViewHolder::class.java,
-        mRef) {
+class ScratchCardsAdapter(options: FirebaseRecyclerOptions<Card>, val context: Context)
+    : FirebaseRecyclerAdapter<Card, ScratchCardsAdapter.ScratchCardsViewHolder>(options) {
 
-
-    override fun populateViewHolder(viewHolder: ScratchCardsViewHolder?, model: Card?, position: Int) {
-        if (model != null) {
-            viewHolder?.bindView(model, mContext, this.getRef(position))
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScratchCardsViewHolder {
+        return ScratchCardsViewHolder(
+                LayoutInflater.from(parent.context)
+                        .inflate(R.layout.cards_container, parent, false))
     }
 
-
+    override fun onBindViewHolder(holder: ScratchCardsViewHolder, position: Int, model: Card) {
+        holder.bindView(model, context, this.getRef(position))
+    }
 
     class ScratchCardsViewHolder(private var mView: View) : RecyclerView.ViewHolder(mView) {
 
         fun bindView(card: Card, mContext: Context, ref: DatabaseReference) {
 
-            if(card.revealed){
+            if (card.revealed) {
                 Glide.with(mContext)
                         .load(R.drawable.tick)
                         .into(mView.check)
                 mView.value.text = "Points: " + card.value.toString()
-            }
-
-            else{
+            } else {
                 Glide.with(mContext)
                         .load(R.drawable.cross)
                         .into(mView.check)
@@ -57,7 +55,7 @@ class ScratchCardsAdapter(mRef: Query, var mContext: Context) : FirebaseRecycler
                     mContext.window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
                     val bundle = Bundle()
-                    bundle.putString("points",card.value.toString())
+                    bundle.putString("points", card.value.toString())
 
                     val frag = NewCardFragment()
                     frag.arguments = bundle

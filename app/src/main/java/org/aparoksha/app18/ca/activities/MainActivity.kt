@@ -1,18 +1,13 @@
 package org.aparoksha.app18.ca.activities
 
-import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore.Images
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -23,37 +18,34 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_main.*
-import org.aparoksha.app18.ca.DetailsActivity
 import org.aparoksha.app18.ca.R
-import org.aparoksha.app18.ca.models.Data
-import org.aparoksha.app18.ca.models.Image
+import org.aparoksha.app18.ca.isUserSignedIn
 import org.aparoksha.app18.ca.models.User
+import org.aparoksha.app18.ca.models.Image
+import org.aparoksha.app18.ca.models.LeaderboardData
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.error
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
-import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AnkoLogger {
 
     private lateinit var mFirebaseAuth: FirebaseAuth
-    private lateinit var mAuthStateListener: FirebaseAuth.AuthStateListener
     private lateinit var mStorageReference: StorageReference
     private lateinit var mFirebaseStorage: FirebaseStorage
     private lateinit var mFirebaseDB: FirebaseDatabase
     private lateinit var mDBReference: DatabaseReference
-    private lateinit var dbData: Data
+    private lateinit var dbData: User
     private lateinit var mLeaderboardRef: DatabaseReference
-    private var list: MutableList<User> = mutableListOf()
+    private var list: MutableList<LeaderboardData> = mutableListOf()
     private lateinit var dialog: ProgressDialog
 
-    private val RC_SIGN_IN = 1
     private val RC_PHOTO_PICKER = 2
     private val CAMERA_REQUEST = 3
-    private val DETAILS_REQUEST = 4
-    private val ERROR_ACTIVITY = 5
-    private val PERMISSIONS_CAMERA_STORAGE_REQUEST = 12
 
     private fun initDB() {
-        dbData = Data()
+        dbData = User()
         mFirebaseAuth = FirebaseAuth.getInstance()
         mFirebaseStorage = FirebaseStorage.getInstance()
         mStorageReference = mFirebaseStorage.reference
@@ -80,45 +72,32 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        scratch.setOnClickListener({
+        openScratchCardsButton.setOnClickListener({
             val cards = Intent(this, ScratchCardsActivity::class.java)
             startActivity(cards)
         })
-
-        mAuthStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val mUser = firebaseAuth.currentUser
-            if (mUser != null) {
-            } else {
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setIsSmartLockEnabled(false)
-                                .setAvailableProviders(
-                                        Arrays.asList<AuthUI.IdpConfig>(
-                                                AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
-                                                AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
-                                .build(),
-                        RC_SIGN_IN)
-            }
-        }
     }
 
     private fun fetchInitialsTotalProgress() {
         mLeaderboardRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(p0: DataSnapshot?) {
-                if (p0 != null) {
-                    p0.children.mapNotNullTo(list) {
-                        it.getValue<User>(User::class.java)
+            override fun onDataChange(snapshot: DataSnapshot?) {
+                if (snapshot != null) {
+
+                    snapshot.children.mapNotNullTo(list) {
+                        it.getValue<LeaderboardData>(LeaderboardData::class.java)
                     }
+
                     var max: Long = 0
                     for (e in list) {
                         max = maxOf(e.score, max)
                     }
+
                     val myRef = mFirebaseDB.getReference("leaderboard").child(mFirebaseAuth.currentUser!!.uid)
+
                     myRef.addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(p0: DataSnapshot?) {
-                            if (p0 != null) {
-                                val myPoints: User? = p0.getValue(User::class.java)
+                        override fun onDataChange(dataSnapshot: DataSnapshot?) {
+                            if (dataSnapshot != null) {
+                                val myPoints: LeaderboardData? = dataSnapshot.getValue(LeaderboardData::class.java)
                                 if (myPoints != null) {
                                     if (myPoints.score == 0L) {
                                         totalProgress.progress = 0
@@ -156,57 +135,49 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         main.visibility = View.INVISIBLE
-        dialog = ProgressDialog.show(this, "Fetching Data", "Loading...")
+        dialog = ProgressDialog.show(this, "Fetching User", "Loading...")
         initDB()
         setListeners()
 
         title = "My Dashboard"
 
-        if (mFirebaseAuth.currentUser != null) {
-            mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
-            mDBReference.keepSynced(true)
-            mLeaderboardRef = mFirebaseDB.getReference("leaderboard")
-            mLeaderboardRef.keepSynced(true)
+        mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
+        mLeaderboardRef = mFirebaseDB.getReference("leaderboard")
 
-            mDBReference.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(p0: DataSnapshot) {
-                    if (p0.value != null) {
-                        dbData = p0.getValue(Data::class.java)!!
-                        user.text = dbData.userName
-                        scratchcardxp.max = 8
-                        scratchcardxp.progress = (((dbData.totalPoints % 200) / 25) % 8L).toInt()
-                        if (!dbData.accountVerified) {
-                            val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
-                            finish()
-                        }
-                    } else {
-                        val i = Intent(this@MainActivity, DetailsActivity::class.java)
-                        startActivityForResult(i, DETAILS_REQUEST)
+        mDBReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value != null) {
+                    dbData = snapshot.getValue(User::class.java)!!
+                    user.text = dbData.userName
+                    scratchcardxp.max = 8
+                    scratchcardxp.progress = (((dbData.totalPoints % 200) / 25) % 8L).toInt()
+                    if (!dbData.accountVerified) {
+                        val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        finish()
                     }
                 }
-
-                override fun onCancelled(p0: DatabaseError?) {
-                    //To change body of created functions use File | Settings | File Templates
-                }
-            })
-
-            try {
-                fetchInitialsTotalProgress()
-            } catch (e: Exception) {
-                totalProgress.progress = 0
-                pointsText.text = "0 / 0"
-                main.visibility = View.VISIBLE
-                dialog.dismiss()
             }
 
-            user.text = dbData.userName
+            override fun onCancelled(error: DatabaseError?) {
+                // Shorthand Anko Logging ;)
+                error(error)
+            }
+        })
 
-        } else {
-            AuthUI.getInstance().signOut(this)
+        try {
+            fetchInitialsTotalProgress()
+
+        } catch (e: Exception) {
+            totalProgress.progress = 0
+            pointsText.text = "0 / 0"
+            main.visibility = View.VISIBLE
+            dialog.dismiss()
         }
+
+        user.text = dbData.userName
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -221,8 +192,7 @@ class MainActivity : AppCompatActivity() {
             finish()
             return true
         } else if (item.itemId == R.id.uploadedImages) {
-            val i = Intent(this, UploadsActivity::class.java)
-            startActivity(i)
+            startActivity<UploadsActivity>()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -230,58 +200,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == Activity.RESULT_OK) {
-                toast("Signed In")
-
-                mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
-                mDBReference.keepSynced(true)
-                mLeaderboardRef = mFirebaseDB.getReference("leaderboard")
-                mLeaderboardRef.keepSynced(true)
-
-                mDBReference.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(p0: DataSnapshot) {
-                        if (p0.value != null) {
-                            dbData = p0.getValue(Data::class.java)!!
-                            user.text = dbData.userName
-                            scratchcardxp.max = 8
-                            scratchcardxp.progress = (((dbData.totalPoints % 200) / 25) % 8L).toInt()
-                            if (!dbData.accountVerified) {
-                                val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(intent)
-                                finish()
-                            }
-                        } else {
-                            dbData = Data()
-                            val i = Intent(this@MainActivity, DetailsActivity::class.java)
-                            startActivityForResult(i, DETAILS_REQUEST)
-                        }
-                    }
-
-                    override fun onCancelled(p0: DatabaseError?) {
-                        //To change body of created functions use File | Settings | File Templates.
-                    }
-                })
-                user.text = mFirebaseAuth.currentUser!!.email
-
-                try {
-                    fetchInitialsTotalProgress()
-                } catch (e: Exception) {
-                    totalProgress.progress = 0
-                    pointsText.text = "0 / 0"
-                    main.visibility = View.VISIBLE
-                    dialog.dismiss()
-                }
-
-                user.text = mFirebaseAuth.currentUser!!.email
-
-            } else {
-                toast("Sign In Cancelled")
-                finish()
-            }
-        } else if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
+        if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val selectedImageUri = data!!.data
@@ -317,38 +236,6 @@ class MainActivity : AppCompatActivity() {
                     toast("Failed")
                 }
             }
-        } else if (requestCode == DETAILS_REQUEST) {
-
-            if (data == null) {
-                finish()
-            } else {
-                val extras = data.extras
-                dbData.collegeName = extras.get("collegeName").toString()
-                dbData.userName = extras.get("userName").toString()
-                dbData.fullName = extras.get("fullName").toString()
-                dbData.gender = extras.get("gender").toString()
-                mDBReference.child("gender").setValue(dbData.gender)
-                mDBReference.child("collegeName").setValue(dbData.collegeName)
-                mDBReference.child("fullName").setValue(dbData.fullName)
-                mDBReference.child("userName").setValue(dbData.userName)
-                user.text = dbData.userName
-                if (mFirebaseAuth.currentUser!!.email == null) {
-                    mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.phoneNumber)
-                } else {
-                    mDBReference.child("identifier").setValue(mFirebaseAuth.currentUser!!.email)
-                }
-
-                mDBReference.child("revealedCount").setValue(0)
-                mDBReference.child("totalPoints").setValue(0)
-                mDBReference.child("count").setValue(0)
-                mDBReference.child("accountVerified").setValue(false)
-
-                val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
-            }
         }
     }
 
@@ -359,17 +246,11 @@ class MainActivity : AppCompatActivity() {
         return Uri.parse(path)
     }
 
-    override fun onPause() {
-        super.onPause()
-        mFirebaseAuth.removeAuthStateListener(mAuthStateListener)
-    }
-
     override fun onResume() {
         super.onResume()
-        if (mFirebaseAuth.currentUser != null) {
+        if (isUserSignedIn()) {
             user.text = dbData.userName
         }
-        mFirebaseAuth.addAuthStateListener(mAuthStateListener)
     }
 
     override fun onBackPressed() {

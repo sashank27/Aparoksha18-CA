@@ -1,10 +1,18 @@
 package org.aparoksha.app18.ca.models
 
 /**
- * Created by sashank on 11/12/17.
+ * Created by akshat on 2/12/17.
  */
-data class User (
-        var name : String = "",
-        var score : Long = 0 ,
-        var gender : String = ""
+data class User(
+        var count: Long = 0,
+        var revealedCount: Long = 0,
+        var totalPoints: Long = 0,
+        var identifier: String = "",
+        var collegeName: String = "",
+        var userName: String = "",
+        var fullName: String = "",
+        var gender: String = "",
+        var images: Map<String, Image>? = null,
+        var cards: Map<String, Card>? = null,
+        var accountVerified: Boolean = false
 )

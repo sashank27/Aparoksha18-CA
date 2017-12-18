@@ -1,15 +1,20 @@
 package org.aparoksha.app18.ca.activities
 
 import android.Manifest
-import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.view.View
-import com.heinrichreimersoftware.materialintro.app.IntroActivity
-import com.heinrichreimersoftware.materialintro.app.NavigationPolicy
-import com.heinrichreimersoftware.materialintro.slide.SimpleSlide
+import android.support.v4.content.ContextCompat
+import com.github.paolorotolo.appintro.AppIntro
+import com.github.paolorotolo.appintro.AppIntro2
+import com.github.paolorotolo.appintro.AppIntro2Fragment
+import com.github.paolorotolo.appintro.AppIntroFragment
+import com.github.paolorotolo.appintro.model.SliderPage
 import org.aparoksha.app18.ca.R
-import org.jetbrains.anko.startActivity
+import android.Manifest.permission.READ_CONTACTS
+import android.support.v4.app.Fragment
+import org.aparoksha.app18.ca.fragments.DetailsIntroFragment
+import org.aparoksha.app18.ca.fragments.SignInIntroFragment
+import org.jetbrains.anko.*
+
 
 data class IntroSlideData(
         val titleRes: Int,
@@ -17,119 +22,60 @@ data class IntroSlideData(
         val imageRes: Int
 )
 
-class WelcomeActivity : IntroActivity() {
+class WelcomeActivity : AppIntro2() {
 
-    private val slides = arrayOf<IntroSlideData>(
+    private val slides = arrayOf(
             IntroSlideData(R.string.sign_in_slide_title, R.string.sign_in_slide_detail, R.drawable.intro1),
             IntroSlideData(R.string.upload_slide_title, R.string.upload_slide_detail, R.drawable.intro2),
             IntroSlideData(R.string.uploaded_slide_title, R.string.uploaded_slide_detail, R.drawable.intro3),
             IntroSlideData(R.string.scratch_card_slide_title, R.string.scratch_card_slide_detail, R.drawable.intro4)
     )
 
+    private val RC_SIGN_IN: Int = 10
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        isFullscreen = true
         super.onCreate(savedInstanceState)
 
-        buttonBackFunction = IntroActivity.BUTTON_BACK_FUNCTION_SKIP
-        buttonNextFunction = IntroActivity.BUTTON_NEXT_FUNCTION_NEXT_FINISH
-        isButtonBackVisible = true
-        isButtonNextVisible = true
-        isButtonCtaVisible = true
-        buttonCtaTintMode = IntroActivity.BUTTON_CTA_TINT_MODE_TEXT
+        val colorPrimary = ContextCompat.getColor(this, R.color.colorPrimary)
+        val colorAccent = ContextCompat.getColor(this, R.color.colorAccent)
+        val colorBlack = ContextCompat.getColor(this, android.R.color.black)
 
-        pageScrollDuration = 1000
+        // Show a Introductory fragment
+        addSlide(AppIntro2Fragment.newInstance("Aparoksha'18 Campus Ambassador", "",
+                R.drawable.logo, colorPrimary, colorBlack, colorBlack))
 
-        addSlide(SimpleSlide.Builder()
-                .title(getString(R.string.sign_in_slide_title))
-                .description(getString(R.string.sign_in_slide_detail))
-                .image(R.drawable.intro1)
-                .background(android.R.color.white)
-                .backgroundDark(R.color.colorAccent)
-                .scrollable(true)
-                .build())
+        // Get User Signed In
+        addSlide(SignInIntroFragment())
 
-        addSlide(SimpleSlide.Builder()
-                .title(getString(R.string.upload_slide_title))
-                .description(getString(R.string.upload_slide_detail))
-                .image(R.drawable.intro2)
-                .background(android.R.color.white)
-                .backgroundDark(R.color.colorAccent)
-                .scrollable(true)
-                .build())
+        // Get Details From Users
+        addSlide(DetailsIntroFragment())
 
-        addSlide(SimpleSlide.Builder()
-                .title(getString(R.string.uploaded_slide_title))
-                .description(getString(R.string.uploaded_slide_detail))
-                .image(R.drawable.intro3)
-                .background(android.R.color.white)
-                .backgroundDark(R.color.colorAccent)
-                .scrollable(true)
-                .build())
+        // Uploads Intro
+        addSlide(AppIntro2Fragment.newInstance(
+                getString(R.string.upload_slide_title),
+                getString(R.string.upload_slide_detail),
+                R.drawable.intro2, colorPrimary, colorBlack, colorBlack))
 
-        addSlide(SimpleSlide.Builder()
-                .title(getString(R.string.scratch_card_slide_title))
-                .description(getString(R.string.scratch_card_slide_detail))
-                .image(R.drawable.intro4)
-                .background(android.R.color.white)
-                .backgroundDark(R.color.colorAccent)
-                .scrollable(true)
-                .build())
+        addSlide(AppIntro2Fragment.newInstance(
+                getString(R.string.uploaded_slide_title),
+                getString(R.string.uploaded_slide_detail),
+                R.drawable.intro3, colorPrimary, colorBlack, colorBlack))
 
-        val permissionsSlide = SimpleSlide.Builder()
-                .title(getString(R.string.permission_slide_title))
-                .description(getString(R.string.permission_slide_detail))
-                .background(android.R.color.white)
-                .backgroundDark(R.color.colorAccent)
-                .scrollable(true)
-                .buttonCtaLabel("Grant Permissions")
-                .buttonCtaClickListener { v->
-                    val i = Intent(this@WelcomeActivity,MainActivity::class.java)
-                    startActivity(i)
-                    finish()
-                }
-                .permissions(arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ))
-                .build()
+        // Scratch Cards
+        addSlide(AppIntro2Fragment.newInstance(
+                getString(R.string.scratch_card_slide_title),
+                getString(R.string.scratch_card_slide_detail),
+                R.drawable.intro4, colorPrimary, colorBlack, colorBlack))
 
-        addSlide(permissionsSlide)
+        showSkipButton(false)
 
-        val last = SimpleSlide.Builder()
-                .title("WELCOME")
-                .background(android.R.color.white)
-                .backgroundDark(R.color.colorAccent)
-                .build()
+        askForPermissions(arrayOf(Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE), 4)
 
-        addSlide(last)
+    }
 
-        setNavigationPolicy(object : NavigationPolicy {
-            override fun canGoForward(position: Int): Boolean {
-                if(getSlide(position) == last){
-                    this@WelcomeActivity.startActivity<MainActivity>()
-                    finish()
-                }
-                return true
-            }
-
-            override fun canGoBackward(position: Int): Boolean {
-                return true
-            }
-        })
-
-        addOnNavigationBlockedListener { position, direction ->
-            val contentView = findViewById<View>(android.R.id.content)
-            if (contentView != null) {
-                val slide = getSlide(position)
-
-                if (slide === permissionsSlide) {
-                    Snackbar.make(contentView,
-                            "Please grant the permissions before proceeding",
-                            Snackbar.LENGTH_LONG)
-                            .show()
-                }
-            }
-        }
-
+    override fun onDonePressed(fragment: Fragment) {
+        startActivity(intentFor<MainActivity>().clearTop().newTask().noAnimation())
     }
 }

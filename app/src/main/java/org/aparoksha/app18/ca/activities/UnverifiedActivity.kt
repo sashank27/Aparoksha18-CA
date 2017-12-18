@@ -12,9 +12,8 @@ class UnverifiedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_unverified)
 
         title = "Unverified Account"
-
         textView3.text = "Contact Team Aparoksha"
-
         textView4.text = "Your account is not verified yet. Contact team Aparoksha to get it verified."
+
     }
 }

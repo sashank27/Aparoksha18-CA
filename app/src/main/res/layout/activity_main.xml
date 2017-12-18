@@ -30,7 +30,7 @@
                 android:textSize="20dp" />
 
             <Button
-                android:id="@+id/scratch"
+                android:id="@+id/openScratchCardsButton"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,10 +115,10 @@
 
             <fragment
                 android:id="@+id/leaderboard"
-                android:name="org.aparoksha.app18.ca.fragments.LeaderboardFragment"
+                android:name="org.aparoksha.app18.ca.fragments.LeaderBoardFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/scratch"
+                android:layout_below="@id/openScratchCardsButton"
                 android:layout_margin="10dp" />
 
         </RelativeLayout>
