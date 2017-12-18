@@ -77,5 +77,6 @@ class WelcomeActivity : AppIntro2() {
 
     override fun onDonePressed(fragment: Fragment) {
         startActivity(intentFor<MainActivity>().clearTop().newTask().noAnimation())
+        finish()
     }
 }

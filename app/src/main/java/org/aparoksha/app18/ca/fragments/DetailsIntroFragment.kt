@@ -58,7 +58,9 @@ class DetailsIntroFragment : Fragment(), ISlidePolicy {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val user = snapshot.getValue(User::class.java)
                     isLoading = false
-                    areDetailsAvailable = (user?.userName != "")
+                    if (user != null) {
+                        areDetailsAvailable = (user.userName != "")
+                    }
                     updateViewByStatus()
                 }
             }
