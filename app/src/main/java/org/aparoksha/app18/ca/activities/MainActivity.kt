@@ -23,6 +23,7 @@ import org.aparoksha.app18.ca.isUserSignedIn
 import org.aparoksha.app18.ca.models.User
 import org.aparoksha.app18.ca.models.Image
 import org.aparoksha.app18.ca.models.LeaderboardData
+import org.aparoksha.app18.ca.uploadFile
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
@@ -32,13 +33,10 @@ import java.io.ByteArrayOutputStream
 class MainActivity : AppCompatActivity(), AnkoLogger {
 
     private lateinit var mFirebaseAuth: FirebaseAuth
-    private lateinit var mStorageReference: StorageReference
-    private lateinit var mFirebaseStorage: FirebaseStorage
     private lateinit var mFirebaseDB: FirebaseDatabase
     private lateinit var mDBReference: DatabaseReference
     private lateinit var dbData: User
     private lateinit var mLeaderboardRef: DatabaseReference
-    private var list: MutableList<LeaderboardData> = mutableListOf()
     private lateinit var dialog: ProgressDialog
 
     private val RC_PHOTO_PICKER = 2
@@ -47,8 +45,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     private fun initDB() {
         dbData = User()
         mFirebaseAuth = FirebaseAuth.getInstance()
-        mFirebaseStorage = FirebaseStorage.getInstance()
-        mStorageReference = mFirebaseStorage.reference
+
         mFirebaseDB = FirebaseDatabase.getInstance()
     }
 
@@ -69,20 +66,18 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
             val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(cameraIntent, CAMERA_REQUEST)
-
         })
 
         openScratchCardsButton.setOnClickListener({
-            val cards = Intent(this, ScratchCardsActivity::class.java)
-            startActivity(cards)
+            startActivity<ScratchCardsActivity>()
         })
     }
 
     private fun fetchInitialsTotalProgress() {
         mLeaderboardRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot?) {
+                val list: MutableList<LeaderboardData> = mutableListOf()
                 if (snapshot != null) {
-
                     snapshot.children.mapNotNullTo(list) {
                         it.getValue<LeaderboardData>(LeaderboardData::class.java)
                     }
@@ -169,7 +164,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         try {
             fetchInitialsTotalProgress()
-
         } catch (e: Exception) {
             totalProgress.progress = 0
             pointsText.text = "0 / 0"
@@ -200,22 +194,14 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+
+
         if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val selectedImageUri = data!!.data
 
-                val userStorage = mStorageReference.child("user")
-                val idReference = userStorage.child(mFirebaseAuth.currentUser!!.uid)
-                val photoRef = idReference.child(System.currentTimeMillis().toString())
-                photoRef.putFile(selectedImageUri).addOnSuccessListener(this) {
-                    pd.dismiss()
-                    mDBReference.child("images").push().setValue(Image(photoRef.path, false))
-                    toast("Successfully Uploaded")
-                }.addOnFailureListener(this) {
-                    pd.dismiss()
-                    toast("Failed")
-                }
+                uploadFile(selectedImageUri,mFirebaseAuth,mDBReference,pd,this)
             }
         } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
@@ -224,17 +210,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 val imageBitmap = extras.get("data") as Bitmap
                 val selectedImageUri = getImageUri(applicationContext, imageBitmap)
 
-                val userStorage = mStorageReference.child("user")
-                val idReference = userStorage.child(mFirebaseAuth.currentUser!!.uid)
-                val photoRef = idReference.child(System.currentTimeMillis().toString())
-                photoRef.putFile(selectedImageUri).addOnSuccessListener(this) {
-                    pd.dismiss()
-                    mDBReference.child("images").push().setValue(Image(photoRef.path, false))
-                    toast("Successfully Uploaded")
-                }.addOnFailureListener(this) {
-                    pd.dismiss()
-                    toast("Failed")
-                }
+                uploadFile(selectedImageUri,mFirebaseAuth,mDBReference,pd,this)
             }
         }
     }
