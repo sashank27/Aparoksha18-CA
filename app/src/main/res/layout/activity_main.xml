@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scroll_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/textView2"
+                android:layout_alignStart="@+id/relativeTitle"
                 android:layout_marginTop="34dp"
                 android:fontFamily="@font/montserrat"
                 android:paddingBottom="5dp"
@@ -34,7 +36,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/scratchcardxp"
+                android:layout_below="@+id/relativeProgress"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="18dp"
                 android:elevation="0dp"
@@ -46,7 +48,7 @@
                 android:id="@+id/progressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile"
+                android:layout_below="@+id/xpLevel"
                 android:padding="8dp">
 
                 <ProgressBar
@@ -55,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
                     android:progress="25"
                     android:scaleY="8" />
 
@@ -69,48 +72,55 @@
                     android:textColor="@android:color/black" />
 
             </RelativeLayout>
-
+            
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/relativeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/scratchcardxp"
+                android:layout_alignStart="@+id/progressLayout"
                 android:layout_below="@+id/progressLayout"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserrat"
-                android:text="XP by Categories"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/likes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textView2"
-                android:layout_below="@+id/textView2"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="14dp"
                 android:fontFamily="@font/lato"
-                android:text="Scratch Card"
+                android:text="Relative Progress"
                 android:textColor="@android:color/black" />
 
             <ProgressBar
-                android:id="@+id/scratchcardxp"
+                android:id="@+id/relativeProgress"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/likes"
+                android:layout_below="@+id/relativeTitle"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:progress="25" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/xpTitle"
+                android:text="XP Level"
+                android:textSize="15sp"
+                android:layout_above="@id/xpLevel"
+                android:fontFamily="@font/montserrat"
+                android:layout_alignEnd="@id/relativeProgress"
+                />
+
+            <TextView
+                android:id="@+id/xpLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/user"
-                android:layout_alignEnd="@+id/scratchcardxp"
-                android:layout_marginEnd="12dp"
-                fab:srcCompat="@mipmap/ic_launcher_round" />
+                android:layout_alignEnd="@+id/relativeProgress"
+                android:layout_alignStart="@id/xpTitle"
+                android:layout_marginBottom="12dp"
+                android:gravity="center"
+                android:text="1"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="@color/colorAccent"/>
 
 
             <fragment

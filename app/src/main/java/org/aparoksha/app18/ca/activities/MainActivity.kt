@@ -19,14 +19,12 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_main.*
 import org.aparoksha.app18.ca.R
+import org.aparoksha.app18.ca.fetchDBCurrentUser
 import org.aparoksha.app18.ca.isUserSignedIn
 import org.aparoksha.app18.ca.models.User
 import org.aparoksha.app18.ca.models.Image
 import org.aparoksha.app18.ca.models.LeaderboardData
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.error
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity(), AnkoLogger {
@@ -41,8 +39,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     private var list: MutableList<LeaderboardData> = mutableListOf()
     private lateinit var dialog: ProgressDialog
 
-    private val RC_PHOTO_PICKER = 2
-    private val CAMERA_REQUEST = 3
+    private val RC_PHOTO_PICKER = 1
+    private val CAMERA_REQUEST = 2
 
     private fun initDB() {
         dbData = User()
@@ -72,10 +70,24 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         })
 
-        openScratchCardsButton.setOnClickListener({
-            val cards = Intent(this, ScratchCardsActivity::class.java)
-            startActivity(cards)
-        })
+        openScratchCardsButton.setOnClickListener({startActivity<ScratchCardsActivity>()})
+    }
+
+    private fun setProgressUser(){
+        user.text = dbData.userName
+        val currentXPlevel = (dbData.totalPoints / 200L).toInt() + 1
+        val currentXPPoints =  (dbData.totalPoints - (currentXPlevel - 1) * 200).toInt()
+        xpLevel.text = currentXPlevel.toString()
+        totalProgress.max = 200
+        totalProgress.progress = currentXPPoints
+        pointsText.text = currentXPPoints.toString() + " / 200"
+    }
+
+    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
     }
 
     private fun fetchInitialsTotalProgress() {
@@ -100,17 +112,15 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                                 val myPoints: LeaderboardData? = dataSnapshot.getValue(LeaderboardData::class.java)
                                 if (myPoints != null) {
                                     if (myPoints.score == 0L) {
-                                        totalProgress.progress = 0
+                                        relativeProgress.progress = 0
                                     } else {
-                                        totalProgress.progress = (myPoints.score * 100 / max).toInt()
+                                        relativeProgress.progress = (myPoints.score * 100 / max).toInt()
                                     }
-                                    pointsText.text = myPoints.score.toString() + " / " + max.toString()
                                     main.visibility = View.VISIBLE
                                     dialog.dismiss()
                                 }
                             } else {
-                                totalProgress.progress = 0
-                                pointsText.text = "0 / " + max
+                                relativeProgress.progress = 0
                                 main.visibility = View.VISIBLE
                                 dialog.dismiss()
                             }
@@ -124,7 +134,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 }
             }
 
-            override fun onCancelled(p0: DatabaseError?) {
+            override fun onCancelled(error: DatabaseError?) {
+                error(error)
             }
 
         })
@@ -141,21 +152,16 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         title = "My Dashboard"
 
-        mDBReference = mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid)
+        mDBReference = fetchDBCurrentUser()!!
         mLeaderboardRef = mFirebaseDB.getReference("leaderboard")
 
         mDBReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.value != null) {
                     dbData = snapshot.getValue(User::class.java)!!
-                    user.text = dbData.userName
-                    scratchcardxp.max = 8
-                    scratchcardxp.progress = (((dbData.totalPoints % 200) / 25) % 8L).toInt()
+                    setProgressUser()
                     if (!dbData.accountVerified) {
-                        val intent = Intent(this@MainActivity, UnverifiedActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(intent)
+                        startActivity(intentFor<UnverifiedActivity>().clearTop().newTask())
                         finish()
                     }
                 }
@@ -171,13 +177,12 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             fetchInitialsTotalProgress()
 
         } catch (e: Exception) {
-            totalProgress.progress = 0
-            pointsText.text = "0 / 0"
+            relativeProgress.progress = 0
             main.visibility = View.VISIBLE
             dialog.dismiss()
         }
 
-        user.text = dbData.userName
+        setProgressUser()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -217,7 +222,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                     toast("Failed")
                 }
             }
-        } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+        }
+        else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val extras = data!!.extras
@@ -237,13 +243,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 }
             }
         }
-    }
-
-    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
     }
 
     override fun onResume() {

@@ -1,6 +1,7 @@
 package org.aparoksha.app18.ca.adapters
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -31,28 +32,22 @@ class UploadsAdapter(options: FirebaseRecyclerOptions<Image>,
     }
 
     override fun onBindViewHolder(holder: UploadsViewHolder, position: Int, model: Image) {
-        holder.bindView(model, position, storageReference, context)
+        holder.bindView(model, storageReference, context)
     }
 
 
     class UploadsViewHolder(private var mView: View) : RecyclerView.ViewHolder(mView) {
 
-        fun bindView(image: Image, position: Int, mStorageReference: StorageReference, mContext: Context) {
-           /* Glide.with(mContext)
-                    .using(FirebaseImageLoader())
+        fun bindView(image: Image, mStorageReference: StorageReference, mContext: Context) {
+            Glide.with(mContext)
                     .load(mStorageReference.child(image.path))
-                    .into(mView.uploadID)*/
+                    .into(mView.image)
 
-            mView.index.text = (position + 1).toString() + "."
-            if (image.verified) {
-                Glide.with(mContext)
-                        .load(R.drawable.tick)
-                        .into(mView.verifiedID)
-            } else {
-                Glide.with(mContext)
-                        .load(R.drawable.cross)
-                        .into(mView.verifiedID)
-            }
+            val colorAccent = ContextCompat.getColor(mContext, R.color.colorAccent)
+            val colorGreen = ContextCompat.getColor(mContext, R.color.green)
+
+            mView.status.text = if (image.verified) "VERIFIED" else "UNVERIFIED"
+            mView.status.setTextColor(if (image.verified) colorGreen else colorAccent)
         }
 
     }

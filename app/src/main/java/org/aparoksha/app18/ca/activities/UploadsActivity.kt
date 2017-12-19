@@ -2,6 +2,7 @@ package org.aparoksha.app18.ca.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -34,7 +35,7 @@ class UploadsActivity : AppCompatActivity() {
         query = mFirebaseDB.getReference("users").
                 child(mFirebaseAuth.currentUser!!.uid).child("images")
 
-        uploadsList.layoutManager = LinearLayoutManager(this)
+        uploadsList.layoutManager = GridLayoutManager(this,2)
         val options = FirebaseRecyclerOptions.Builder<Image>()
                 .setQuery(query, Image::class.java)
                 .build()
