@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.uploads_container.view.*
@@ -42,6 +43,7 @@ class UploadsAdapter(options: FirebaseRecyclerOptions<Image>,
             Glide.with(mContext)
                     .load(mStorageReference.child(image.path))
                     .into(mView.image)
+            mView.image.scaleType = ImageView.ScaleType.FIT_XY
 
             val colorAccent = ContextCompat.getColor(mContext, R.color.colorAccent)
             val colorGreen = ContextCompat.getColor(mContext, R.color.green)

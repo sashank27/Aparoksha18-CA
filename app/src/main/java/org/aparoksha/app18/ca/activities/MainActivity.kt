@@ -15,21 +15,17 @@ import android.view.View
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_main.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.fetchDBCurrentUser
 import org.aparoksha.app18.ca.isUserSignedIn
 import org.aparoksha.app18.ca.models.User
-import org.aparoksha.app18.ca.models.Image
 import org.aparoksha.app18.ca.models.LeaderboardData
 import org.jetbrains.anko.*
 import org.aparoksha.app18.ca.uploadFile
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity(), AnkoLogger {
@@ -38,7 +34,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     private lateinit var mFirebaseDB: FirebaseDatabase
     private lateinit var mDBReference: DatabaseReference
     private lateinit var dbData: User
-    private lateinit var mLeaderboardRef: DatabaseReference
     private lateinit var dialog: ProgressDialog
 
     private val RC_PHOTO_PICKER = 1
@@ -47,7 +42,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     private fun initDB() {
         dbData = User()
         mFirebaseAuth = FirebaseAuth.getInstance()
-
         mFirebaseDB = FirebaseDatabase.getInstance()
     }
 
@@ -90,9 +84,12 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         return Uri.parse(path)
     }
 
-    private fun fetchInitialsTotalProgress() {
+    private fun fetchInitialsTotalProgress(mLeaderboardRef: DatabaseReference) {
+
         mLeaderboardRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
             override fun onDataChange(snapshot: DataSnapshot?) {
+
                 val list: MutableList<LeaderboardData> = mutableListOf()
                 if (snapshot != null) {
                     snapshot.children.mapNotNullTo(list) {
@@ -153,7 +150,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         title = "My Dashboard"
 
         mDBReference = fetchDBCurrentUser()!!
-        mLeaderboardRef = mFirebaseDB.getReference("leaderboard")
+        val mLeaderboardRef = mFirebaseDB.getReference("leaderboard")
 
         mDBReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -174,7 +171,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         })
 
         try {
-            fetchInitialsTotalProgress()
+            fetchInitialsTotalProgress(mLeaderboardRef)
         } catch (e: Exception) {
             relativeProgress.progress = 0
             main.visibility = View.VISIBLE
@@ -210,7 +207,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val selectedImageUri = data!!.data
-
                 uploadFile(selectedImageUri,mFirebaseAuth,mDBReference,pd,this)
             }
         }
@@ -220,7 +216,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 val extras = data!!.extras
                 val imageBitmap = extras.get("data") as Bitmap
                 val selectedImageUri = getImageUri(applicationContext, imageBitmap)
-
                 uploadFile(selectedImageUri,mFirebaseAuth,mDBReference,pd,this)
             }
         }

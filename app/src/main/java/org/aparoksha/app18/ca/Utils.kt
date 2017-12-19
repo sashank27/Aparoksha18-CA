@@ -17,10 +17,6 @@ import org.jetbrains.anko.toast
 
 fun isUserSignedIn() = FirebaseAuth.getInstance().currentUser != null
 
-fun doDetailsExist(id: String) {
-
-}
-
 fun fetchDBCurrentUser(): DatabaseReference? {
     val mFirebaseDB = FirebaseDatabase.getInstance()
     val mFirebaseAuth = FirebaseAuth.getInstance()

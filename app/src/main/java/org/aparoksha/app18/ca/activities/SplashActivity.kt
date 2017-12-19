@@ -17,8 +17,6 @@ import org.jetbrains.anko.startActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    private lateinit var mFirebaseAuth: FirebaseAuth
-    private lateinit var mFirebaseDB: FirebaseDatabase
     private val SPLASH_DISPLAY_LENGTH: Long = 2500
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,8 +33,7 @@ class SplashActivity : AppCompatActivity() {
         }, 200)
 
         Handler().postDelayed({
-            mFirebaseAuth = FirebaseAuth.getInstance()
-            mFirebaseDB = FirebaseDatabase.getInstance()
+            val mFirebaseAuth = FirebaseAuth.getInstance()
 
             if (mFirebaseAuth.currentUser != null) {
                 val myRef = fetchDBCurrentUser()!!
