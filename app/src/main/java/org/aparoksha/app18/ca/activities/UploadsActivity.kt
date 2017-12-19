@@ -16,23 +16,19 @@ import org.aparoksha.app18.ca.models.Image
 
 class UploadsActivity : AppCompatActivity() {
 
-    private lateinit var mFirebaseStorage: FirebaseStorage
-    private lateinit var mFirebaseDB: FirebaseDatabase
-    private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var adapter: UploadsAdapter
-    private lateinit var query: Query
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_uploads)
 
-        mFirebaseAuth = FirebaseAuth.getInstance()
-        mFirebaseDB = FirebaseDatabase.getInstance()
-        mFirebaseStorage = FirebaseStorage.getInstance()
+        val mFirebaseAuth = FirebaseAuth.getInstance()
+        val mFirebaseDB = FirebaseDatabase.getInstance()
+        val mFirebaseStorage = FirebaseStorage.getInstance()
 
         title = "Uploads"
 
-        query = mFirebaseDB.getReference("users").
+        val query = mFirebaseDB.getReference("users").
                 child(mFirebaseAuth.currentUser!!.uid).child("images")
 
         uploadsList.layoutManager = GridLayoutManager(this,2)
