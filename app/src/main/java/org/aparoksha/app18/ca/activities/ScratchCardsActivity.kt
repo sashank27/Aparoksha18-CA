@@ -19,8 +19,6 @@ import org.aparoksha.app18.ca.models.Card
 
 class ScratchCardsActivity : AppCompatActivity() {
 
-    private lateinit var mFirebaseDB: FirebaseDatabase
-    private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var adapter: ScratchCardsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +26,8 @@ class ScratchCardsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_scratch)
         title = "Your Cards"
 
-        mFirebaseAuth = FirebaseAuth.getInstance()
-        mFirebaseDB = FirebaseDatabase.getInstance()
+        val mFirebaseAuth = FirebaseAuth.getInstance()
+        val mFirebaseDB = FirebaseDatabase.getInstance()
 
         val query = mFirebaseDB.getReference("users").
                 child(mFirebaseAuth.currentUser!!.uid).child("cards")
