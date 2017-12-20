@@ -43,13 +43,12 @@ class UploadsAdapter(options: FirebaseRecyclerOptions<Image>,
             Glide.with(mContext)
                     .load(mStorageReference.child(image.path))
                     .into(mView.image)
-            mView.image.scaleType = ImageView.ScaleType.FIT_XY
 
             val colorAccent = ContextCompat.getColor(mContext, R.color.colorAccent)
             val colorGreen = ContextCompat.getColor(mContext, R.color.green)
 
-            mView.status.text = if (image.verified) "VERIFIED" else "UNVERIFIED"
-            mView.status.setTextColor(if (image.verified) colorGreen else colorAccent)
+            mView.status.text = if (image.verified) "Verified" else "Unverified"
+            mView.status.setBackgroundColor(if (image.verified) colorGreen else colorAccent)
         }
 
     }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +56,8 @@ class ScratchCardsAdapter(options: FirebaseRecyclerOptions<Card>, val context: C
                     mContext.window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
                     val bundle = Bundle()
-                    bundle.putString("points", card.value.toString())
+                    bundle.putString("reference", ref.key)
+                    bundle.putString("points",card.value.toString())
 
                     val frag = NewCardFragment()
                     frag.arguments = bundle
@@ -64,8 +66,7 @@ class ScratchCardsAdapter(options: FirebaseRecyclerOptions<Card>, val context: C
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     ft.commit()
 
-                    ref.child("revealed").setValue(true)
-
+                    //ref.child("revealed").setValue(true)
                 }
             }
         }
