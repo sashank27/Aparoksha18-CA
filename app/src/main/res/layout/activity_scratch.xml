@@ -12,4 +12,16 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/noCardsView"
+        android:text="No Scratch Cards available now"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="15dp"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:visibility="gone"/>
+
 </android.support.design.widget.CoordinatorLayout>

@@ -37,7 +37,6 @@ class WelcomeActivity : AppIntro2() {
         super.onCreate(savedInstanceState)
 
         val colorPrimary = ContextCompat.getColor(this, R.color.colorPrimary)
-        val colorAccent = ContextCompat.getColor(this, R.color.colorAccent)
         val colorBlack = ContextCompat.getColor(this, android.R.color.black)
 
         // Show a Introductory fragment

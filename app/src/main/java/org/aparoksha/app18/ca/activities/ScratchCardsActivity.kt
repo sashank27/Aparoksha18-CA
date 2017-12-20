@@ -3,6 +3,7 @@ package org.aparoksha.app18.ca.activities
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -35,9 +36,11 @@ class ScratchCardsActivity : AppCompatActivity() {
                 .setQuery(query, Card::class.java)
                 .build()
 
-        adapter = ScratchCardsAdapter(options, this)
+        adapter = ScratchCardsAdapter(options, this, noCardsView)
         recyclerview.layoutManager = GridLayoutManager(this, 2)
         recyclerview.adapter = adapter
+
+        noCardsView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
 
     }
 

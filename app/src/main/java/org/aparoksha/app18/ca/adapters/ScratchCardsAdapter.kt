@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -22,7 +23,9 @@ import org.aparoksha.app18.ca.models.Card
  * Created by sashank on 13/12/17.
  */
 
-class ScratchCardsAdapter(options: FirebaseRecyclerOptions<Card>, val context: Context)
+class ScratchCardsAdapter(options: FirebaseRecyclerOptions<Card>,
+                          val context: Context,
+                          val noCardsView: TextView)
     : FirebaseRecyclerAdapter<Card, ScratchCardsAdapter.ScratchCardsViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScratchCardsViewHolder {
@@ -64,10 +67,14 @@ class ScratchCardsAdapter(options: FirebaseRecyclerOptions<Card>, val context: C
                     ft.add(R.id.frame, frag)
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     ft.commit()
-
-                    //ref.child("revealed").setValue(true)
                 }
             }
         }
+    }
+
+    override fun onDataChanged() {
+        super.onDataChanged()
+        noCardsView.visibility = if (itemCount == 0) View.VISIBLE else View.GONE
+
     }
 }
