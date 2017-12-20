@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,12 +41,12 @@ class ScratchCardsAdapter(options: FirebaseRecyclerOptions<Card>, val context: C
 
             if (card.revealed) {
                 Glide.with(mContext)
-                        .load(R.drawable.tick)
+                        .load(R.drawable.ic_trophy)
                         .into(mView.check)
-                mView.value.text = "Points: " + card.value.toString()
+                mView.value.text = "You earned " + card.value.toString() + " points."
             } else {
                 Glide.with(mContext)
-                        .load(R.drawable.cross)
+                        .load(R.drawable.ic_question)
                         .into(mView.check)
                 mView.value.text = "Not Yet Revealed"
 

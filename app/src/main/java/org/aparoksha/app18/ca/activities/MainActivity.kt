@@ -201,8 +201,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-
-
         if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")

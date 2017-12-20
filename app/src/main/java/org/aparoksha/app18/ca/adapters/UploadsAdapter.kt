@@ -6,15 +6,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.uploads_container.view.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.models.Image
-import com.firebase.ui.storage.images.FirebaseImageLoader
-import com.bumptech.glide.Glide
-import com.firebase.ui.database.FirebaseRecyclerOptions
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by akshat on 12/12/17.
@@ -39,16 +40,19 @@ class UploadsAdapter(options: FirebaseRecyclerOptions<Image>,
 
     class UploadsViewHolder(private var mView: View) : RecyclerView.ViewHolder(mView) {
 
-        fun bindView(image: Image, mStorageReference: StorageReference, mContext: Context) {
-            Glide.with(mContext)
-                    .load(mStorageReference.child(image.path))
+        fun bindView(image: Image, storageRef: StorageReference, context: Context) {
+            val imageRef = storageRef.child(image.path)
+            Glide.with(context)
+                    .load(imageRef)
                     .into(mView.image)
 
-            val colorAccent = ContextCompat.getColor(mContext, R.color.colorAccent)
-            val colorGreen = ContextCompat.getColor(mContext, R.color.green)
+            val colorAccent = ContextCompat.getColor(context, R.color.colorAccent)
+            val colorGreen = ContextCompat.getColor(context, R.color.green)
 
             mView.status.text = if (image.verified) "Verified" else "Unverified"
-            mView.status.setBackgroundColor(if (image.verified) colorGreen else colorAccent)
+            mView.status.setTextColor(if (image.verified) colorGreen else colorAccent)
+            val uploadDate = Timestamp(imageRef.name.toLong()) as Date
+            mView.uploadDateTV.text = "Uploaded on ${SimpleDateFormat("MMM d, yyyy").format(uploadDate)}"
         }
 
     }

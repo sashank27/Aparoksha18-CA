@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.Query
 import kotlinx.android.synthetic.main.activity_scratch.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.adapters.ScratchCardsAdapter
