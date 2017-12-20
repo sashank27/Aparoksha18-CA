@@ -4,8 +4,6 @@ package org.aparoksha.app18.ca.models
  * Created by akshat on 2/12/17.
  */
 data class User(
-        var count: Long = 0,
-        var revealedCount: Long = 0,
         var totalPoints: Long = 0,
         var identifier: String = "",
         var collegeName: String = "",
@@ -14,5 +12,6 @@ data class User(
         var gender: String = "",
         var images: Map<String, Image>? = null,
         var cards: Map<String, Card>? = null,
-        var accountVerified: Boolean = false
+        var accountVerified: Boolean = false,
+        var tokenFCM: String? = ""
 )

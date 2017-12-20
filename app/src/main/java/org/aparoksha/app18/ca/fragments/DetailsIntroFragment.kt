@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.github.paolorotolo.appintro.ISlidePolicy
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.fragment_details_intro.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.activities.EnterDetailsActivity
@@ -93,7 +94,7 @@ class DetailsIntroFragment : Fragment(), ISlidePolicy {
                             collegeName = extras["collegeName"].toString(),
                             gender = extras["gender"].toString(),
                             totalPoints = 0,
-                            count = 0,
+                            tokenFCM = FirebaseInstanceId.getInstance().token,
                             identifier = if (fbUser.email == null) fbUser.phoneNumber!! else fbUser.email!!
                     )
 
