@@ -26,11 +26,20 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed({
             val constraintSet = ConstraintSet()
 
+            constraintSet.clone(this@SplashActivity, R.layout.additional_splash)
+
+            TransitionManager.beginDelayedTransition(splash)
+            constraintSet.applyTo(splash)
+        }, 400)
+
+        Handler().postDelayed({
+            val constraintSet = ConstraintSet()
+
             constraintSet.clone(this@SplashActivity, R.layout.secondary_splash)
 
             TransitionManager.beginDelayedTransition(splash)
             constraintSet.applyTo(splash)
-        }, 200)
+        }, 600)
 
         Handler().postDelayed({
             val mFirebaseAuth = FirebaseAuth.getInstance()
