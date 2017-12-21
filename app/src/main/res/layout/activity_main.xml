@@ -33,7 +33,7 @@
 
             <Button
                 android:id="@+id/openScratchCardsButton"
-                style="@style/Widget.AppCompat.Button.Borderless"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeProgress"
@@ -142,7 +142,7 @@
         android:layout_alignParentEnd="true"
         android:paddingBottom="16dp"
         android:paddingEnd="16dp"
-        fab:fab_colorNormal="@color/colorAccent"
+        fab:fab_colorNormal="#FFF"
         fab:fab_colorPressed="@color/colorAccentDark"
         fab:fab_colorRipple="#99FFFFFF"
         fab:fab_shadowColor="#000000"

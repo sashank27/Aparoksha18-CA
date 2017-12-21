@@ -7,6 +7,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/varela_round</item>
+
+        <item name="fab_size">normal</item>
+        <item name="fab_shadowColor">#66000000</item>
+        <item name="fab_colorNormal">@color/colorAccent</item>
+        <item name="fab_colorPressed">@color/colorAccentDark</item>
+        <item name="menu_colorNormal">@color/colorAccent</item>
+        <item name="menu_colorPressed">@color/colorAccentDark</item>
     </style>
 
     <style name="AppIntroTheme" parent="Theme.AppCompat.Light.NoActionBar">

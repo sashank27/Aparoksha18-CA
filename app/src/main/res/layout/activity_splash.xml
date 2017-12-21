@@ -5,62 +5,66 @@
     android:id="@+id/splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.aparoksha.app18.ca.activities.SplashActivity">
+    tools:context="org.aparoksha.app18.ca.activities.SplashActivity"
+    tools:layout_editor_absoluteY="25dp">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="89dp"
-        android:layout_height="6dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="395dp"
+        android:layout_height="350dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/logo" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="17dp"
-        android:layout_height="4dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="APAROKSHA"
-        android:textColor="@android:color/black"
-        android:fontFamily="@font/montserrat"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.837"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.577" />
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/logo"
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/campusAmbassador"
-        android:layout_width="9dp"
-        android:layout_height="6dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/montserrat"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/quicksand"
         android:gravity="center"
         android:text="Campus Ambassador"
-        android:textColor="@android:color/black"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.648" />
+        android:visibility="visible"
+        app:layout_constraintRight_toLeftOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="APAROKSHA' 18"
+        android:textColor="@android:color/black"
+        android:textSize="40sp"
+        app:layout_constraintRight_toLeftOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="0dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="250dp" />
+
 
 </android.support.constraint.ConstraintLayout>
