@@ -21,6 +21,9 @@ class UploadsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_uploads)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         val mFirebaseAuth = FirebaseAuth.getInstance()
         val mFirebaseDB = FirebaseDatabase.getInstance()
         val mFirebaseStorage = FirebaseStorage.getInstance()
@@ -30,7 +33,7 @@ class UploadsActivity : AppCompatActivity() {
         val query = mFirebaseDB.getReference("users").
                 child(mFirebaseAuth.currentUser!!.uid).child("images")
 
-        uploadsList.layoutManager = GridLayoutManager(this,2)
+        uploadsList.layoutManager = GridLayoutManager(this, 2)
         val options = FirebaseRecyclerOptions.Builder<Image>()
                 .setQuery(query, Image::class.java)
                 .build()
@@ -50,5 +53,10 @@ class UploadsActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         adapter.stopListening()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

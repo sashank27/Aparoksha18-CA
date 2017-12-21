@@ -1,38 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/outer_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/outer_frame"
-    android:background="#aa000000"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="#aa161616">
 
-        <FrameLayout
-            android:id="@+id/card_frame"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:background="#ffffff"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center">
+    <FrameLayout
+        android:id="@+id/cardFrame"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/unrevealedIV"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="150dp"
+                android:padding="25dp"
                 android:layout_gravity="center"
-                android:src= "@drawable/logo" />
+                android:src="@drawable/ic_trophy" />
 
-            <com.clock.scratch.ScratchView
-                android:id="@+id/scratch_view"
+            <TextView
+                android:id="@+id/pointsTV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center" />
-        </FrameLayout>
+                android:gravity="center"
+                android:textSize="20sp"
+                android:text="20 points" />
+
+        </LinearLayout>
+
+        <com.clock.scratch.ScratchView
+            android:id="@+id/scratchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="visible" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/card_frame"
+        android:layout_above="@+id/cardFrame"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
         android:layout_marginTop="100dp"

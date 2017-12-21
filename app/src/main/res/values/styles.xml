@@ -8,12 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/varela_round</item>
 
+        <item name="actionBarStyle">@style/AppTheme.ActionBar</item>
+        <item name="android:windowContentOverlay">@null</item>
         <item name="fab_size">normal</item>
         <item name="fab_shadowColor">#66000000</item>
         <item name="fab_colorNormal">@color/colorAccent</item>
         <item name="fab_colorPressed">@color/colorAccentDark</item>
         <item name="menu_colorNormal">@color/colorAccent</item>
         <item name="menu_colorPressed">@color/colorAccentDark</item>
+    </style>
+
+    <style name="AppTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <!-- remove shadow below action bar -->
+        <!-- <item name="android:elevation">0dp</item> -->
+        <!-- Support library compatibility -->
+        <item name="elevation">0dp</item>
     </style>
 
     <style name="AppIntroTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -25,12 +34,12 @@
 
 
     <style name="MyTransparentTheme" parent="android:Theme.Dialog">
-    <item name="android:windowIsTranslucent">true</item>
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="android:windowContentOverlay">@null</item>
-    <item name="android:windowNoTitle">true</item>
-    <item name="android:windowIsFloating">true</item>
-    <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
 
     </style>
 

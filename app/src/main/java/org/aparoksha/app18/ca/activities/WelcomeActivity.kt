@@ -15,23 +15,7 @@ import org.aparoksha.app18.ca.fragments.DetailsIntroFragment
 import org.aparoksha.app18.ca.fragments.SignInIntroFragment
 import org.jetbrains.anko.*
 
-
-data class IntroSlideData(
-        val titleRes: Int,
-        val descriptionRes: Int,
-        val imageRes: Int
-)
-
 class WelcomeActivity : AppIntro2() {
-
-    private val slides = arrayOf(
-            IntroSlideData(R.string.sign_in_slide_title, R.string.sign_in_slide_detail, R.drawable.intro1),
-            IntroSlideData(R.string.upload_slide_title, R.string.upload_slide_detail, R.drawable.intro2),
-            IntroSlideData(R.string.uploaded_slide_title, R.string.uploaded_slide_detail, R.drawable.intro3),
-            IntroSlideData(R.string.scratch_card_slide_title, R.string.scratch_card_slide_detail, R.drawable.intro4)
-    )
-
-    private val RC_SIGN_IN: Int = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

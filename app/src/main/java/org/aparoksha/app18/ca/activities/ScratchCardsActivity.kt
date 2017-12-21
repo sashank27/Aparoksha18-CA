@@ -25,6 +25,8 @@ class ScratchCardsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scratch)
         title = "Your Cards"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val mFirebaseAuth = FirebaseAuth.getInstance()
         val mFirebaseDB = FirebaseDatabase.getInstance()
@@ -68,5 +70,8 @@ class ScratchCardsActivity : AppCompatActivity() {
         adapter.stopListening()
     }
 
-
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 }

@@ -43,14 +43,19 @@ class ScratchCardsAdapter(options: FirebaseRecyclerOptions<Card>,
         fun bindView(card: Card, mContext: Context, ref: DatabaseReference) {
 
             if (card.revealed) {
+
                 Glide.with(mContext)
-                        .load(R.drawable.ic_trophy)
+                        .load(if (card.value > 0) R.drawable.ic_trophy else R.drawable.ic_sad)
                         .into(mView.check)
                 mView.value.text = "You earned " + card.value.toString() + " points."
+                mView.setOnClickListener(null)
+
             } else {
+
                 Glide.with(mContext)
                         .load(R.drawable.ic_question)
                         .into(mView.check)
+
                 mView.value.text = "Not Yet Revealed"
 
                 mView.setOnClickListener {
@@ -59,7 +64,7 @@ class ScratchCardsAdapter(options: FirebaseRecyclerOptions<Card>,
 
                     val bundle = Bundle()
                     bundle.putString("reference", ref.key)
-                    bundle.putString("points",card.value.toString())
+                    bundle.putString("points", card.value.toString())
 
                     val frag = NewCardFragment()
                     frag.arguments = bundle

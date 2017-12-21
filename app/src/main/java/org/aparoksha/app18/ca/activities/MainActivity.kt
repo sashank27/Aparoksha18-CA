@@ -19,13 +19,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.fetchDBCurrentUser
 import org.aparoksha.app18.ca.isUserSignedIn
-import org.aparoksha.app18.ca.models.User
 import org.aparoksha.app18.ca.models.LeaderboardData
-import org.jetbrains.anko.*
+import org.aparoksha.app18.ca.models.User
 import org.aparoksha.app18.ca.uploadFile
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.error
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity(), AnkoLogger {
@@ -64,13 +61,13 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             startActivityForResult(cameraIntent, CAMERA_REQUEST)
         })
 
-        openScratchCardsButton.setOnClickListener({startActivity<ScratchCardsActivity>()})
+        openScratchCardsButton.setOnClickListener({ startActivity<ScratchCardsActivity>() })
     }
 
-    private fun setProgressUser(){
+    private fun setProgressUser() {
         user.text = dbData.userName
         val currentXPlevel = (dbData.totalPoints / 200L).toInt() + 1
-        val currentXPPoints =  (dbData.totalPoints - (currentXPlevel - 1) * 200).toInt()
+        val currentXPPoints = (dbData.totalPoints - (currentXPlevel - 1) * 200).toInt()
         xpLevel.text = currentXPlevel.toString()
         totalProgress.max = 200
         totalProgress.progress = currentXPPoints
@@ -147,7 +144,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         initDB()
         setListeners()
 
-        title = "My Dashboard"
+        title = "Dashboard"
 
         mDBReference = fetchDBCurrentUser()!!
         val mLeaderboardRef = mFirebaseDB.getReference("leaderboard")
@@ -181,6 +178,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         setProgressUser()
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
@@ -205,22 +203,27 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val selectedImageUri = data!!.data
-                uploadFile(selectedImageUri,mFirebaseAuth,mDBReference,pd,this)
+                uploadFile(selectedImageUri, mFirebaseAuth, mDBReference, pd, this)
             }
-        }
-        else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val extras = data!!.extras
                 val imageBitmap = extras.get("data") as Bitmap
                 val selectedImageUri = getImageUri(applicationContext, imageBitmap)
-                uploadFile(selectedImageUri,mFirebaseAuth,mDBReference,pd,this)
+                uploadFile(selectedImageUri, mFirebaseAuth, mDBReference, pd, this)
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
+
+        // Fix the bottom scrolling bug
+        /* Handler().postDelayed({
+             scrollLayout.smoothScrollBy(0,0)
+         }, 3000)*/
+
         if (isUserSignedIn()) {
             user.text = dbData.userName
         }

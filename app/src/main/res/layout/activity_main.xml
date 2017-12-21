@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/scroll_layout"
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants">
 
             <TextView
                 android:id="@+id/user"
@@ -28,7 +28,7 @@
                 android:text="Username"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textColor="@android:color/black"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Button
@@ -54,8 +54,8 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
                     android:progress="25"
                     android:scaleY="8" />
 
@@ -66,21 +66,21 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
                     android:padding="5dp"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
+                    android:text="25 / 100"
                     android:textColor="#000"
-                    android:text="25 / 100" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
-            
+
             <TextView
                 android:id="@+id/relativeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/progressLayout"
                 android:layout_below="@+id/progressLayout"
-                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="14dp"
                 android:text="Relative Progress"
                 android:textColor="@android:color/black" />
@@ -97,14 +97,13 @@
                 android:progress="25" />
 
             <TextView
+                android:id="@+id/xpTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/xpTitle"
-                android:text="XP Level"
-                android:textSize="15sp"
                 android:layout_above="@id/xpLevel"
                 android:layout_alignEnd="@id/relativeProgress"
-                />
+                android:text="XP Level"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/xpLevel"
@@ -116,9 +115,9 @@
                 android:layout_marginBottom="12dp"
                 android:gravity="center"
                 android:text="1"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
             <fragment
@@ -130,7 +129,7 @@
                 android:layout_margin="10dp" />
 
         </RelativeLayout>
-<!--&gt;>>>>>> upstream/master-->
+        <!--&gt;>>>>>> upstream/master-->
 
     </android.support.v4.widget.NestedScrollView>
 
@@ -147,7 +146,7 @@
         fab:fab_colorRipple="#99FFFFFF"
         fab:fab_shadowColor="#000000"
         fab:fab_showShadow="true"
-        fab:layout_anchor="@id/scroll_layout"
+        fab:layout_anchor="@id/scrollLayout"
         fab:layout_anchorGravity="bottom|right|end"
         fab:menu_labels_colorNormal="#333333"
         fab:menu_labels_colorPressed="#444444"
