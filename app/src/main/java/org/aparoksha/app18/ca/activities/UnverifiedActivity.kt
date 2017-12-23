@@ -21,7 +21,7 @@ class UnverifiedActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.logout_menu,menu)
+        menuInflater.inflate(R.menu.main_menu,menu)
         return true
     }
 

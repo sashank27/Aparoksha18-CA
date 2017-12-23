@@ -191,8 +191,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             user.text = ""
             finish()
             return true
-        } else if (item.itemId == R.id.uploadedImages) {
-            startActivity<UploadsActivity>()
         }
         return super.onOptionsItemSelected(item)
     }
