@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -12,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             android:descendantFocusability="blocksDescendants">
 
             <TextView
@@ -40,7 +41,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="18dp"
                 android:padding="10dp"
-                android:text="View your Scratch Cards" />
+                android:text="View your Scratch Cards"
+                android:visibility="invisible" />
 
             <RelativeLayout
                 android:id="@+id/progressLayout"
@@ -120,16 +122,67 @@
                 android:textStyle="bold" />
 
 
+            <LinearLayout
+                android:id="@+id/buttonLL"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/relativeProgress"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp">
+
+                <LinearLayout
+                    android:id="@+id/viewRewardsButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_gift" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Rewards" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/viewUploadsButton"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_uploads" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Uploads" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
             <fragment
                 android:id="@+id/leaderboard"
                 android:name="org.aparoksha.app18.ca.fragments.LeaderBoardFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/openScratchCardsButton"
+                android:layout_below="@id/buttonLL"
                 android:layout_margin="10dp" />
 
         </RelativeLayout>
-        <!--&gt;>>>>>> upstream/master-->
 
     </android.support.v4.widget.NestedScrollView>
 
@@ -162,7 +215,7 @@
             android:id="@+id/camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_camera"
+            app:srcCompat="@drawable/ic_camera"
             fab:fab_label="Upload from Camera"
             fab:fab_size="mini" />
 
@@ -170,7 +223,7 @@
             android:id="@+id/upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_photo"
+            app:srcCompat="@drawable/ic_photo"
             fab:fab_label="Upload from Storage"
             fab:fab_size="mini" />
 

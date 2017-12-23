@@ -44,24 +44,25 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
     private fun setListeners() {
 
-        upload.setOnClickListener({
+        upload.setOnClickListener    {
             if (fab_menu.isOpened)
                 fab_menu.close(true)
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/jpeg"
             intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
             startActivityForResult(Intent.createChooser(intent, "Select Photo to be uploaded"), RC_PHOTO_PICKER)
-        })
+        }
 
-        camera.setOnClickListener({
+        camera.setOnClickListener {
             if (fab_menu.isOpened)
                 fab_menu.close(true)
 
             val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(cameraIntent, CAMERA_REQUEST)
-        })
+        }
 
-        openScratchCardsButton.setOnClickListener({ startActivity<ScratchCardsActivity>() })
+        viewRewardsButton.setOnClickListener { startActivity<ScratchCardsActivity>() }
+        viewUploadsButton.setOnClickListener { startActivity<UploadsActivity>() }
     }
 
     private fun setProgressUser() {
