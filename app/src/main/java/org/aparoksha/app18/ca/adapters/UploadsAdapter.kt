@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.uploads_container.view.*
+import org.aparoksha.app18.ca.GlideApp
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.models.Image
 import java.sql.Timestamp
@@ -44,7 +44,7 @@ class UploadsAdapter(options: FirebaseRecyclerOptions<Image>,
 
         fun bindView(image: Image, storageRef: StorageReference, context: Context) {
             val imageRef = storageRef.child(image.path)
-            Glide.with(context)
+            GlideApp.with(context)
                     .load(imageRef)
                     .into(mView.image)
 

@@ -30,7 +30,7 @@ class LeaderBoardFragment : Fragment() {
 
         val query = firebaseDB.getReference("leaderboard")
                 .orderByChild("score")
-                .limitToLast(50)
+                .limitToLast(10)
 
         val options = FirebaseRecyclerOptions.Builder<LeaderboardData>()
                 .setQuery(query, LeaderboardData::class.java)
@@ -45,6 +45,7 @@ class LeaderBoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerview.layoutManager = LinearLayoutManager(context)
         recyclerview.adapter = adapter
+        recyclerview.isNestedScrollingEnabled = false
     }
 
     override fun onStart() {

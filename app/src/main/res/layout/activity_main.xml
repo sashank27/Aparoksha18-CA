@@ -215,7 +215,7 @@
             android:id="@+id/camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_camera"
+            android:src="@drawable/ic_camera"
             fab:fab_label="Upload from Camera"
             fab:fab_size="mini" />
 
@@ -223,7 +223,7 @@
             android:id="@+id/upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_photo"
+            android:src="@drawable/ic_photo"
             fab:fab_label="Upload from Storage"
             fab:fab_size="mini" />
 

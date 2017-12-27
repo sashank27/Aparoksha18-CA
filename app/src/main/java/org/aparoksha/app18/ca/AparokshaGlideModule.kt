@@ -12,13 +12,11 @@ import com.google.firebase.storage.StorageReference
 import java.io.InputStream
 
 /**
- * Created by betterclever on 18/12/17.
+ * Created by sashank on 27/12/17.
  */
 @GlideModule
 class AparokshaGlideModule : AppGlideModule() {
-
     override fun registerComponents(context: Context?, glide: Glide?, registry: Registry?) {
-        // Register FirebaseImageLoader to handle StorageReference
         registry!!.append(StorageReference::class.java, InputStream::class.java,
                 FirebaseImageLoader.Factory())
     }

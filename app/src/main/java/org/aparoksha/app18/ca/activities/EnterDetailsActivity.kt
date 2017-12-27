@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.activity_details.view.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.setIntentDetails
+import org.jetbrains.anko.toast
 
 class EnterDetailsActivity : AppCompatActivity() {
 
@@ -45,6 +46,8 @@ class EnterDetailsActivity : AppCompatActivity() {
                     finish()
                 }
             }
+            else
+                toast("Please enter complete details")
         })
     }
 
