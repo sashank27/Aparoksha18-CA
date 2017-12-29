@@ -16,12 +16,10 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
+import org.aparoksha.app18.ca.*
 import org.aparoksha.app18.ca.R
-import org.aparoksha.app18.ca.fetchDBCurrentUser
-import org.aparoksha.app18.ca.isUserSignedIn
 import org.aparoksha.app18.ca.models.LeaderboardData
 import org.aparoksha.app18.ca.models.User
-import org.aparoksha.app18.ca.uploadFile
 import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 
@@ -191,6 +189,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             user.text = ""
             finish()
             return true
+        } else if (item.itemId == R.id.developers) {
+            startActivity<DevelopersActivity>()
         }
         return super.onOptionsItemSelected(item)
     }

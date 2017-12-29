@@ -3,10 +3,8 @@
     package="org.aparoksha.app18.ca">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -22,11 +20,12 @@
         <activity android:name=".activities.EnterDetailsActivity" />
         <activity android:name=".activities.UploadsActivity" />
         <activity android:name=".activities.UnverifiedActivity" />
-        <activity android:name=".activities.WelcomeActivity"
-            android:theme="@style/AppIntroTheme"
-            android:label="@string/define_appintro"/>
-
-        <activity android:name=".activities.SplashActivity"
+        <activity
+            android:name=".activities.WelcomeActivity"
+            android:label="@string/define_appintro"
+            android:theme="@style/AppIntroTheme" />
+        <activity
+            android:name=".activities.SplashActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,13 +38,13 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service
-            android:name=".MyFirebaseInstanceIdService">
+        <service android:name=".MyFirebaseInstanceIdService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
+        <activity android:name=".activities.DevelopersActivity"></activity>
     </application>
 
 </manifest>

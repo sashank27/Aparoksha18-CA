@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Aparoksha 18 CA</string>
+    <string name="app_name">Aparoksha\'18 CA</string>
     <string name="sign_in_slide_detail">Sign up using either your Google account or mobile number, and get the account verified by Team Aparoksha</string>
     <string name="details_slide_detail">We need some details to verify your identity. Please enter details before proceeding.</string>
     <string name="upload_slide_detail">You need to upload pictures about your promotion efforts to score points. We need some permissions to do so. Please grant before proceeding.</string>
