@@ -13,6 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.appinvite.AppInviteInvitation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
     private val RC_PHOTO_PICKER = 1
     private val CAMERA_REQUEST = 2
+    private val REQUEST_INVITE = 3
 
     private fun initDB() {
         dbData = User()
@@ -191,6 +193,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             return true
         } else if (item.itemId == R.id.developers) {
             startActivity<DevelopersActivity>()
+        } else if (item.itemId == R.id.invite) {
+            onInviteClicked()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -233,5 +237,18 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             fab_menu.close(true)
         else
             super.onBackPressed()
+    }
+
+    //TODO: Update Invitation link
+    private fun onInviteClicked() {
+        val intent = AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                .setMessage(getString(R.string.invitation_message))
+                .setEmailHtmlContent("<html><body>"
+                        + "<br><img src=\"http://i65.tinypic.com/33v1yxz.png\" alt=\"CA\" />"
+                        + "<p>Download Aparoksha\'18 Campus Ambassador either from Play Store or by clicking <a href=\"https://play.google.com/store/apps/details?id=com.google.android.gm&hl=en\">here</a>"
+                        + "</body></html>")
+                .setEmailSubject("Join Aparoksha\'18 Campus Ambassador App")
+                .build()
+        startActivityForResult(intent, REQUEST_INVITE)
     }
 }

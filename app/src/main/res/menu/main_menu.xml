@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:title="Invite Friends"
+        android:id="@+id/invite"/>
+
+    <item
         android:title="Developers"
         android:id="@+id/developers"/>
 

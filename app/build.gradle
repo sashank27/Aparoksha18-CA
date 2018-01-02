@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:11.4.2'
     implementation 'com.google.firebase:firebase-auth:11.4.2'
     implementation 'com.google.firebase:firebase-messaging:11.4.2'
+    implementation 'com.google.firebase:firebase-invites:11.4.2'
     implementation 'com.google.firebase:firebase-crash:11.4.2'
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') { transitive = true }
 

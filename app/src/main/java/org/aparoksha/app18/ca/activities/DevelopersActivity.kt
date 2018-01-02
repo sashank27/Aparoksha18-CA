@@ -15,6 +15,10 @@ class DevelopersActivity : AppCompatActivity() {
 
         title = "App Operations"
 
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         pranjal.setOnClickListener {
             openChromeTab("https://github.com/betterclever")
         }
@@ -32,5 +36,10 @@ class DevelopersActivity : AppCompatActivity() {
         val builder = CustomTabsIntent.Builder()
         val customTabsIntent = builder.build()
         customTabsIntent.launchUrl(this, Uri.parse(url))
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

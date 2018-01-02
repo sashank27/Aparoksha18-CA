@@ -12,4 +12,6 @@
     <string name="scratch_card_slide_title">Scratch Cards</string>
     <string name="permission_slide_title">We need some Permissions</string>
     <string name="details_submitted_already">Bravo! Details submitted already!!</string>
+    <string name="invitation_title">Send app invite Aparoksha Campus Ambassador Invitation</string>
+    <string name="invitation_message">Be a part of the Technical Extravaganza with its official Campus Ambassador App.</string>
 </resources>
