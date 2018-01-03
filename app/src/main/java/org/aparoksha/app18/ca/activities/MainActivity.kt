@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         viewRewardsButton.setOnClickListener { startActivity<ScratchCardsActivity>() }
         viewUploadsButton.setOnClickListener { startActivity<UploadsActivity>() }
+        viewOffersButton.setOnClickListener { startActivity<OffersActivity>() }
     }
 
     private fun setProgressUser() {
@@ -239,13 +240,12 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             super.onBackPressed()
     }
 
-    //TODO: Update Invitation link
     private fun onInviteClicked() {
         val intent = AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
                 .setMessage(getString(R.string.invitation_message))
                 .setEmailHtmlContent("<html><body>"
                         + "<br><img src=\"http://i65.tinypic.com/33v1yxz.png\" alt=\"CA\" />"
-                        + "<p>Download Aparoksha\'18 Campus Ambassador either from Play Store or by clicking <a href=\"https://play.google.com/store/apps/details?id=com.google.android.gm&hl=en\">here</a>"
+                        + "<p>Download Aparoksha\'18 Campus Ambassador either from Play Store or by clicking <a href=\"https://play.google.com/store/apps/details?id=org.aparoksha.app18.ca\">here</a>"
                         + "</body></html>")
                 .setEmailSubject("Join Aparoksha\'18 Campus Ambassador App")
                 .build()

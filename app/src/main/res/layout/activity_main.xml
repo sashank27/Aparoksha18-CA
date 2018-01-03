@@ -172,6 +172,28 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/viewOffersButton"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/medal" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="Offers" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <fragment

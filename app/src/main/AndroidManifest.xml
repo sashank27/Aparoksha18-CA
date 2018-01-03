@@ -44,7 +44,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.DevelopersActivity"></activity>
+        <activity android:name=".activities.DevelopersActivity" />
+        <activity android:name=".activities.OffersActivity"></activity>
     </application>
 
 </manifest>
