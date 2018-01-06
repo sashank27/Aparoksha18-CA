@@ -1,8 +1,7 @@
-package org.aparoksha.app18.ca
+package org.aparoksha.app18.ca.utils
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth

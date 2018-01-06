@@ -8,9 +8,8 @@ import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_details.*
-import kotlinx.android.synthetic.main.activity_details.view.*
 import org.aparoksha.app18.ca.R
-import org.aparoksha.app18.ca.setIntentDetails
+import org.aparoksha.app18.ca.utils.setIntentDetails
 import org.jetbrains.anko.toast
 
 class EnterDetailsActivity : AppCompatActivity() {
@@ -35,13 +34,13 @@ class EnterDetailsActivity : AppCompatActivity() {
             if (!collegeName.text.equals("") && !userName.text.equals("") && !fullName.text.equals("")
                     && gender_group.checkedRadioButtonId != -1 && imageUri != null) {
                 if(male.isChecked) {
-                    val intent: Intent= setIntentDetails(intent,fullName.text.toString(),
-                            collegeName.text.toString(),userName.text.toString(),"male", imageUri)
+                    val intent: Intent= setIntentDetails(intent, fullName.text.toString(),
+                            collegeName.text.toString(), userName.text.toString(), "male", imageUri)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 } else {
-                    val intent: Intent= setIntentDetails(intent,fullName.text.toString(),
-                            collegeName.text.toString(),userName.text.toString(),"female",imageUri)
+                    val intent: Intent= setIntentDetails(intent, fullName.text.toString(),
+                            collegeName.text.toString(), userName.text.toString(), "female", imageUri)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 }

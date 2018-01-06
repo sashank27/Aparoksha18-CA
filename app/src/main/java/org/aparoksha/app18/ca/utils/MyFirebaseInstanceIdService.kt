@@ -1,4 +1,4 @@
-package org.aparoksha.app18.ca
+package org.aparoksha.app18.ca.utils
 
 import android.util.Log
 import com.google.firebase.iid.FirebaseInstanceId

@@ -20,7 +20,7 @@ import org.aparoksha.app18.ca.R
     companion object {
         fun instantiate(head: String,image: Int, foot:String) : OffersFragment {
             val fragment = OffersFragment()
-            var args = Bundle()
+            val args = Bundle()
             args.putInt("image",image)
             args.putString("head",head)
             args.putString("foot",foot)

@@ -17,10 +17,12 @@ import com.google.android.gms.appinvite.AppInviteInvitation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
-import org.aparoksha.app18.ca.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.models.LeaderboardData
 import org.aparoksha.app18.ca.models.User
+import org.aparoksha.app18.ca.utils.fetchDBCurrentUser
+import org.aparoksha.app18.ca.utils.isUserSignedIn
+import org.aparoksha.app18.ca.utils.uploadFile
 import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
 
@@ -61,9 +63,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             startActivityForResult(cameraIntent, CAMERA_REQUEST)
         }
 
-        viewRewardsButton.setOnClickListener { startActivity<ScratchCardsActivity>() }
+        viewScratchCardsButton.setOnClickListener { startActivity<ScratchCardsActivity>() }
         viewUploadsButton.setOnClickListener { startActivity<UploadsActivity>() }
-        viewOffersButton.setOnClickListener { startActivity<OffersActivity>() }
+        viewRewardsButton.setOnClickListener { startActivity<OffersActivity>() }
     }
 
     private fun setProgressUser() {

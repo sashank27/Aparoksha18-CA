@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.aparoksha.app18.ca.R
-import org.aparoksha.app18.ca.fetchDBCurrentUser
+import org.aparoksha.app18.ca.utils.fetchDBCurrentUser
 import org.jetbrains.anko.startActivity
 
 class SplashActivity : AppCompatActivity() {

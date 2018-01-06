@@ -12,7 +12,7 @@ import com.github.paolorotolo.appintro.ISlidePolicy
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_signin_intro.*
 import org.aparoksha.app18.ca.R
-import org.aparoksha.app18.ca.isUserSignedIn
+import org.aparoksha.app18.ca.utils.isUserSignedIn
 import org.jetbrains.anko.toast
 import java.util.*
 

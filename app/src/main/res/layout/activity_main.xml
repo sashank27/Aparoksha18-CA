@@ -125,57 +125,17 @@
             <LinearLayout
                 android:id="@+id/buttonLL"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/relativeProgress"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:paddingTop="5dp">
 
                 <LinearLayout
                     android:id="@+id/viewRewardsButton"
                     android:layout_width="80dp"
-                    android:layout_height="100dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:padding="10dp"
-                        app:srcCompat="@drawable/ic_gift" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Rewards" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/viewUploadsButton"
-                    android:layout_width="80dp"
-                    android:layout_height="100dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:padding="10dp"
-                        app:srcCompat="@drawable/ic_uploads" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Uploads" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/viewOffersButton"
-                    android:layout_width="80dp"
-                    android:layout_height="100dp"
+                    android:layout_height="110dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -190,7 +150,47 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="Offers" />
+                        android:text="Rewards" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/viewScratchCardsButton"
+                    android:layout_width="80dp"
+                    android:layout_height="110dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_gift" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Scratch Cards" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/viewUploadsButton"
+                    android:layout_width="80dp"
+                    android:layout_height="110dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_uploads" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Uploads" />
 
                 </LinearLayout>
 

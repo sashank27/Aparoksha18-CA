@@ -16,7 +16,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.uploads_container.view.*
-import org.aparoksha.app18.ca.GlideApp
+import org.aparoksha.app18.ca.utils.GlideApp
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.models.Image
 import java.sql.Timestamp

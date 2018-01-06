@@ -2,9 +2,10 @@ package org.aparoksha.app18.ca.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import kotlinx.android.synthetic.main.activity_offers.*
 import org.aparoksha.app18.ca.R
-import org.aparoksha.app18.ca.ZoomOutPageTransformer
+import org.aparoksha.app18.ca.utils.ZoomOutPageTransformer
 import org.aparoksha.app18.ca.adapters.OffersAdapter
 
 class OffersActivity : AppCompatActivity() {
@@ -20,6 +21,22 @@ class OffersActivity : AppCompatActivity() {
 
         pager.setPageTransformer(true, ZoomOutPageTransformer())
         pager.adapter = OffersAdapter(supportFragmentManager)
+
+        pageIndicatorView.count = 9
+        pageIndicatorView.selection = 0
+
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                pageIndicatorView.selection = position
+            }
+
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
