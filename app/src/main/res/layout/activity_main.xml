@@ -140,15 +140,13 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="70dp"
                         android:padding="10dp"
-                        app:srcCompat="@drawable/medal" />
+                        app:srcCompat="@drawable/ic_rewards" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="Rewards" />
 
