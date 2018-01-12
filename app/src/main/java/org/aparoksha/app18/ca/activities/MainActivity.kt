@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         viewScratchCardsButton.setOnClickListener { startActivity<ScratchCardsActivity>() }
         viewUploadsButton.setOnClickListener { startActivity<UploadsActivity>() }
         viewRewardsButton.setOnClickListener { startActivity<OffersActivity>() }
+        viewFeedButton.setOnClickListener { startActivity<FeedsActivity>() }
     }
 
     private fun setProgressUser() {

@@ -45,7 +45,8 @@
         </service>
 
         <activity android:name=".activities.DevelopersActivity" />
-        <activity android:name=".activities.OffersActivity"></activity>
+        <activity android:name=".activities.OffersActivity" />
+        <activity android:name=".activities.FeedsActivity"></activity>
     </application>
 
 </manifest>

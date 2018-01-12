@@ -72,5 +72,9 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.4.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    implementation 'com.koushikdutta.urlimageviewhelper:urlimageviewhelper:1.0.4'
+    implementation 'org.jsoup:jsoup:1.8.3'
+    implementation 'com.leocardz:link-preview:2.0.0@aar'
 }
 apply plugin: 'com.google.gms.google-services'
