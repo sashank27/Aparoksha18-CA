@@ -116,12 +116,12 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                                         relativeProgress.progress = (myPoints.score * 100 / max).toInt()
                                     }
                                     main.visibility = View.VISIBLE
-                                    dialog.dismiss()
+                                    if (dialog.isShowing) dialog.dismiss()
                                 }
                             } else {
                                 relativeProgress.progress = 0
                                 main.visibility = View.VISIBLE
-                                dialog.dismiss()
+                                if (dialog.isShowing) dialog.dismiss()
                             }
                         }
 
@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         } catch (e: Exception) {
             relativeProgress.progress = 0
             main.visibility = View.VISIBLE
-            dialog.dismiss()
+            if (dialog.isShowing) dialog.dismiss()
         }
 
         setProgressUser()
