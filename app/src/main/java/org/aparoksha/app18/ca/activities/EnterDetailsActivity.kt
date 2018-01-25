@@ -2,6 +2,7 @@ package org.aparoksha.app18.ca.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,8 +10,17 @@ import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_details.*
 import org.aparoksha.app18.ca.R
+import org.aparoksha.app18.ca.utils.getImageUri
 import org.aparoksha.app18.ca.utils.setIntentDetails
 import org.jetbrains.anko.toast
+import java.io.FileNotFoundException
+import java.io.InputStream
+import android.graphics.Bitmap
+import android.os.ParcelFileDescriptor
+import android.util.Log
+import com.airbnb.lottie.utils.Utils.getScale
+import java.io.IOException
+
 
 class EnterDetailsActivity : AppCompatActivity() {
 
@@ -23,6 +33,9 @@ class EnterDetailsActivity : AppCompatActivity() {
 
         title = "Personal Details"
 
+        checkboxClicked()
+        checkBox.setOnClickListener { checkboxClicked() }
+
         select_image.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/jpeg"
@@ -31,16 +44,17 @@ class EnterDetailsActivity : AppCompatActivity() {
         }
 
         submit.setOnClickListener({
+            val refer = if(checkBox.isChecked) referral.text.toString() else ""
             if (!collegeName.text.equals("") && !userName.text.equals("") && !fullName.text.equals("")
                     && gender_group.checkedRadioButtonId != -1 && imageUri != null) {
                 if(male.isChecked) {
                     val intent: Intent= setIntentDetails(intent, fullName.text.toString(),
-                            collegeName.text.toString(), userName.text.toString(), "male", imageUri)
+                            collegeName.text.toString(), userName.text.toString(), "male", imageUri,refer)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 } else {
                     val intent: Intent= setIntentDetails(intent, fullName.text.toString(),
-                            collegeName.text.toString(), userName.text.toString(), "female", imageUri)
+                            collegeName.text.toString(), userName.text.toString(), "female", imageUri,refer)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
@@ -61,6 +75,14 @@ class EnterDetailsActivity : AppCompatActivity() {
                         .into(imageView)
                 imageView.visibility = View.VISIBLE
             }
+        }
+    }
+
+    fun checkboxClicked() {
+        if(checkBox.isChecked) {
+            referral.visibility = View.VISIBLE
+        } else {
+            referral.visibility = View.GONE
         }
     }
 }

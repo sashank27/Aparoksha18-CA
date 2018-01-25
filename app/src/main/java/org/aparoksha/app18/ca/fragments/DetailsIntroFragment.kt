@@ -16,6 +16,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_details_intro.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.activities.EnterDetailsActivity
+import org.aparoksha.app18.ca.activities.WelcomeActivity
 import org.aparoksha.app18.ca.utils.isUserSignedIn
 import org.aparoksha.app18.ca.models.User
 import org.jetbrains.anko.intentFor
@@ -99,6 +100,7 @@ class DetailsIntroFragment : Fragment(), ISlidePolicy {
                             gender = extras["gender"].toString(),
                             totalPoints = 0,
                             tokenFCM = FirebaseInstanceId.getInstance().token,
+                            refer = extras["refer"].toString(),
                             identifier = if (fbUser.email == null) fbUser.phoneNumber!! else fbUser.email!!
                     )
 

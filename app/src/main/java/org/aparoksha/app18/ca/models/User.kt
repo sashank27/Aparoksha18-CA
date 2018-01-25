@@ -13,5 +13,6 @@ data class User(
         var images: Map<String, Image>? = null,
         var cards: Map<String, Card>? = null,
         var accountVerified: Boolean = false,
-        var tokenFCM: String? = ""
+        var tokenFCM: String? = "",
+        var refer: String = ""
 )

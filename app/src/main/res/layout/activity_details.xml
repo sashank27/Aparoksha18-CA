@@ -105,13 +105,28 @@
 
         </LinearLayout>
 
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apply refferal"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/referral"
+            android:visibility="gone"
+            android:hint="Email ID/Mobile no.(+91XXXXXXXXXX)"/>
+
+
         <Button
             android:id="@+id/submit"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:text="Submit" />
 
     </LinearLayout>

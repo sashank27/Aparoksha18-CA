@@ -17,12 +17,12 @@ class OffersActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        title = "Offers"
+        title = "Rewards"
 
         pager.setPageTransformer(true, ZoomOutPageTransformer())
         pager.adapter = OffersAdapter(supportFragmentManager)
 
-        pageIndicatorView.count = 9
+        pageIndicatorView.count = 8
         pageIndicatorView.selection = 0
 
         pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {

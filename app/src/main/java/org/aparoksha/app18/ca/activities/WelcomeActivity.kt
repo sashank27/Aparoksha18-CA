@@ -52,9 +52,10 @@ class WelcomeActivity : AppIntro2() {
 
         showSkipButton(false)
 
-        askForPermissions(arrayOf(Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE), 4)
+        askForPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE),2)
+
+        askForPermissions(arrayOf(Manifest.permission.CAMERA), 4)
+
 
     }
 

@@ -25,6 +25,11 @@ import org.aparoksha.app18.ca.utils.isUserSignedIn
 import org.aparoksha.app18.ca.utils.uploadFile
 import org.jetbrains.anko.*
 import java.io.ByteArrayOutputStream
+import android.graphics.BitmapFactory
+import org.aparoksha.app18.ca.utils.getImageUri
+import java.io.FileNotFoundException
+import java.io.InputStream
+
 
 class MainActivity : AppCompatActivity(), AnkoLogger {
 
@@ -77,13 +82,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         totalProgress.max = 200
         totalProgress.progress = currentXPPoints
         pointsText.text = currentXPPoints.toString() + " / 200"
-    }
-
-    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
     }
 
     private fun fetchInitialsTotalProgress(mLeaderboardRef: DatabaseReference) {

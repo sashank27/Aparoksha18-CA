@@ -2,13 +2,17 @@ package org.aparoksha.app18.ca.utils
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import org.aparoksha.app18.ca.models.Image
 import org.jetbrains.anko.toast
+import java.io.ByteArrayOutputStream
 
 /**
  * Created by betterclever on 18/12/17.
@@ -23,12 +27,13 @@ fun fetchDBCurrentUser(): DatabaseReference? {
     return if (isUserSignedIn()) mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid) else null
 }
 
-fun setIntentDetails(intent: Intent, fullName: String, collegeName: String, userName: String, gender: String,uri: Uri?): Intent {
+fun setIntentDetails(intent: Intent, fullName: String, collegeName: String, userName: String, gender: String,uri: Uri?,refer: String): Intent {
     intent.putExtra("fullName", fullName)
     intent.putExtra("collegeName", collegeName)
     intent.putExtra("userName", userName)
     intent.putExtra("gender",gender)
     intent.putExtra("uri",uri)
+    intent.putExtra("refer",refer)
     return intent
 }
 
@@ -46,4 +51,11 @@ fun uploadFile(selectedImageUri: Uri,mFirebaseAuth: FirebaseAuth,mDBReference: D
         pd.dismiss()
         mActivity.toast("Failed")
     }
+}
+
+fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+    val bytes = ByteArrayOutputStream()
+    inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+    val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+    return Uri.parse(path)
 }
