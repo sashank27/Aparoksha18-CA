@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".AparokshaCA"
@@ -46,7 +47,8 @@
 
         <activity android:name=".activities.DevelopersActivity" />
         <activity android:name=".activities.OffersActivity" />
-        <activity android:name=".activities.FeedsActivity"></activity>
+        <activity android:name=".activities.FeedsActivity" />
+        <activity android:name=".activities.ContactsActivity"></activity>
     </application>
 
 </manifest>

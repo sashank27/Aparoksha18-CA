@@ -10,6 +10,10 @@
         android:id="@+id/developers"/>
 
     <item
+        android:title="Contact Us"
+        android:id="@+id/contact"/>
+
+    <item
         android:title="Logout"
         android:id="@+id/logout"/>
 

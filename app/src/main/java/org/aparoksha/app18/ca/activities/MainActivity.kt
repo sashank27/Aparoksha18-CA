@@ -197,6 +197,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             startActivity<DevelopersActivity>()
         } else if (item.itemId == R.id.invite) {
             onInviteClicked()
+        } else if (item.itemId == R.id.contact) {
+            startActivity<ContactsActivity>();
         }
         return super.onOptionsItemSelected(item)
     }

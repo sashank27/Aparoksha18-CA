@@ -7,6 +7,7 @@ import android.view.MenuItem
 import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_unverified.*
 import org.aparoksha.app18.ca.R
+import org.jetbrains.anko.startActivity
 
 class UnverifiedActivity : AppCompatActivity() {
 
@@ -30,6 +31,10 @@ class UnverifiedActivity : AppCompatActivity() {
             AuthUI.getInstance().signOut(this)
             finish()
             return true
+        } else if (item.itemId == R.id.developers) {
+            startActivity<DevelopersActivity>()
+        }else if (item.itemId == R.id.contact) {
+            startActivity<ContactsActivity>();
         }
         return super.onOptionsItemSelected(item)
     }
