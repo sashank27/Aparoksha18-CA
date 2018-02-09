@@ -2,7 +2,6 @@ package org.aparoksha.app18.ca.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -10,16 +9,9 @@ import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_details.*
 import org.aparoksha.app18.ca.R
-import org.aparoksha.app18.ca.utils.getImageUri
 import org.aparoksha.app18.ca.utils.setIntentDetails
 import org.jetbrains.anko.toast
-import java.io.FileNotFoundException
-import java.io.InputStream
-import android.graphics.Bitmap
-import android.os.ParcelFileDescriptor
-import android.util.Log
-import com.airbnb.lottie.utils.Utils.getScale
-import java.io.IOException
+import org.aparoksha.app18.ca.utils.compressImage
 
 
 class EnterDetailsActivity : AppCompatActivity() {
@@ -69,16 +61,17 @@ class EnterDetailsActivity : AppCompatActivity() {
 
         if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                imageUri = data.data
+                val imageUriOrig = data.data
                 Glide.with(this)
                         .load(R.drawable.selected)
                         .into(imageView)
                 imageView.visibility = View.VISIBLE
+                imageUri = compressImage(this,imageUriOrig,"id-card")
             }
         }
     }
 
-    fun checkboxClicked() {
+    private fun checkboxClicked() {
         if(checkBox.isChecked) {
             referral.visibility = View.VISIBLE
         } else {

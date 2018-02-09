@@ -2,12 +2,9 @@ package org.aparoksha.app18.ca.activities
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore.Images
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -20,15 +17,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.aparoksha.app18.ca.R
 import org.aparoksha.app18.ca.models.LeaderboardData
 import org.aparoksha.app18.ca.models.User
-import org.aparoksha.app18.ca.utils.fetchDBCurrentUser
-import org.aparoksha.app18.ca.utils.isUserSignedIn
-import org.aparoksha.app18.ca.utils.uploadFile
 import org.jetbrains.anko.*
-import java.io.ByteArrayOutputStream
-import android.graphics.BitmapFactory
-import org.aparoksha.app18.ca.utils.getImageUri
-import java.io.FileNotFoundException
-import java.io.InputStream
+import org.aparoksha.app18.ca.utils.*
 
 
 class MainActivity : AppCompatActivity(), AnkoLogger {
@@ -198,7 +188,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         } else if (item.itemId == R.id.invite) {
             onInviteClicked()
         } else if (item.itemId == R.id.contact) {
-            startActivity<ContactsActivity>();
+            startActivity<ContactsActivity>()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -209,15 +199,15 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
-                val selectedImageUri = data!!.data
-                uploadFile(selectedImageUri, mFirebaseAuth, mDBReference, pd, this)
+                val selectedImageUri = compressImage(this,data!!.data,"image")
+                uploadFile(selectedImageUri!!, mFirebaseAuth, mDBReference, pd, this)
             }
         } else if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             if (mFirebaseAuth.currentUser != null) {
                 val pd = ProgressDialog.show(this, "Uploading File", "Processing...")
                 val extras = data!!.extras
                 val imageBitmap = extras.get("data") as Bitmap
-                val selectedImageUri = getImageUri(applicationContext, imageBitmap)
+                val selectedImageUri = getImageUri(applicationContext, imageBitmap, "Title")
                 uploadFile(selectedImageUri, mFirebaseAuth, mDBReference, pd, this)
             }
         }

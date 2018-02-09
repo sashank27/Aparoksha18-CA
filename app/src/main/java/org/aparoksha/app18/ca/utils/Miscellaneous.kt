@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import com.google.firebase.auth.FirebaseAuth
@@ -13,6 +14,8 @@ import com.google.firebase.storage.FirebaseStorage
 import org.aparoksha.app18.ca.models.Image
 import org.jetbrains.anko.toast
 import java.io.ByteArrayOutputStream
+import java.io.FileNotFoundException
+import java.io.InputStream
 
 /**
  * Created by betterclever on 18/12/17.
@@ -53,9 +56,30 @@ fun uploadFile(selectedImageUri: Uri,mFirebaseAuth: FirebaseAuth,mDBReference: D
     }
 }
 
-fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+fun getImageUri(inContext: Context, inImage: Bitmap, title: String): Uri {
     val bytes = ByteArrayOutputStream()
     inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-    val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+    val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, title, null)
     return Uri.parse(path)
+}
+
+fun compressImage(context: Context, imageUri: Uri?, title: String): Uri? {
+    try {
+        val imageStream = context.contentResolver.openInputStream(imageUri)
+        val options = BitmapFactory.Options()
+        val size = imageStream?.available()
+        if (size != null) {
+            when {
+                size >= (1 * 1024 * 1024) -> options.inSampleSize = 8
+                size >= (512 * 1024) -> options.inSampleSize = 4
+                size >= (64 * 1024) -> options.inSampleSize = 2
+                else -> options.inSampleSize = 1
+            }
+        }
+        val compressedImage = BitmapFactory.decodeStream(imageStream, null, options)
+        return getImageUri(context, compressedImage, title)
+    } catch (e : Exception){
+        e.printStackTrace()
+        return null
+    }
 }
