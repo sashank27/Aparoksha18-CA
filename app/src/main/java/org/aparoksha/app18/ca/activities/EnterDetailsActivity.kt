@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_details.*
@@ -35,25 +36,25 @@ class EnterDetailsActivity : AppCompatActivity() {
             startActivityForResult(Intent.createChooser(intent, "Select Photo to be uploaded"), RC_PHOTO_PICKER)
         }
 
-        submit.setOnClickListener({
+        submit.setOnClickListener {
             val refer = if(checkBox.isChecked) referral.text.toString() else ""
             if (!collegeName.text.equals("") && !userName.text.equals("") && !fullName.text.equals("")
                     && gender_group.checkedRadioButtonId != -1 && imageUri != null) {
                 if(male.isChecked) {
                     val intent: Intent= setIntentDetails(intent, fullName.text.toString(),
-                            collegeName.text.toString(), userName.text.toString(), "male", imageUri,refer)
+                            collegeName.text.toString(), userName.text.toString(), phoneNumber.text.toString(), "male", imageUri,refer)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 } else {
                     val intent: Intent= setIntentDetails(intent, fullName.text.toString(),
-                            collegeName.text.toString(), userName.text.toString(), "female", imageUri,refer)
+                            collegeName.text.toString(), userName.text.toString(), phoneNumber.text.toString(),"female", imageUri,refer)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
             }
             else
                 toast("Please enter complete details")
-        })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

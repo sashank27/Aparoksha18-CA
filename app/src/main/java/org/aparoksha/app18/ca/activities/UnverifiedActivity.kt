@@ -27,14 +27,14 @@ class UnverifiedActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.logout){
-            AuthUI.getInstance().signOut(this)
-            finish()
-            return true
-        } else if (item.itemId == R.id.developers) {
-            startActivity<DevelopersActivity>()
-        }else if (item.itemId == R.id.contact) {
-            startActivity<ContactsActivity>();
+        when {
+            item.itemId == R.id.logout -> {
+                AuthUI.getInstance().signOut(this)
+                finish()
+                return true
+            }
+            item.itemId == R.id.developers -> startActivity<DevelopersActivity>()
+            item.itemId == R.id.contact -> startActivity<ContactsActivity>()
         }
         return super.onOptionsItemSelected(item)
     }

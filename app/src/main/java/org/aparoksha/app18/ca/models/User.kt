@@ -9,6 +9,7 @@ data class User(
         var collegeName: String = "",
         var userName: String = "",
         var fullName: String = "",
+        var phoneNumber: String = "",
         var gender: String = "",
         var images: Map<String, Image>? = null,
         var cards: Map<String, Card>? = null,

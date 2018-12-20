@@ -96,11 +96,12 @@ class DetailsIntroFragment : Fragment(), ISlidePolicy {
                             fullName = extras["fullName"].toString(),
                             userName = extras["userName"].toString(),
                             collegeName = extras["collegeName"].toString(),
+                            phoneNumber = extras["phoneNumber"].toString(),
                             gender = extras["gender"].toString(),
                             totalPoints = 0,
                             tokenFCM = FirebaseInstanceId.getInstance().token,
                             refer = extras["refer"].toString(),
-                            identifier = if (fbUser.email == null) fbUser.phoneNumber!! else fbUser.email!!
+                            identifier = fbUser.email!!
                     )
 
                     val uri: Uri = extras["uri"] as Uri

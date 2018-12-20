@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Aparoksha\'18 CA</string>
-    <string name="sign_in_slide_detail">Sign up using either your Google account or mobile number, and get the account verified by Team Aparoksha</string>
+    <string name="app_name">Aparoksha\'19 CA</string>
+    <string name="sign_in_slide_detail">Sign up using your Google account, and get the account verified by Team Aparoksha</string>
     <string name="details_slide_detail">We need some details to verify your identity. Please enter details before proceeding.</string>
     <string name="upload_slide_detail">You need to upload pictures about your promotion efforts to score points. We need some permissions to do so. Please grant before proceeding.</string>
     <string name="uploaded_slide_detail">Keep a track of the files you\'ve uploaded, while they get verified by us. Receive points and increase your XP!!</string>

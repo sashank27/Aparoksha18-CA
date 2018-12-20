@@ -24,7 +24,7 @@ class WelcomeActivity : AppIntro2() {
         val colorBlack = ContextCompat.getColor(this, android.R.color.black)
 
         // Show a Introductory fragment
-        addSlide(AppIntro2Fragment.newInstance("Aparoksha'18 Campus Ambassador", "",
+        addSlide(AppIntro2Fragment.newInstance("Aparoksha'19 Campus Ambassador", "",
                 R.drawable.logo, colorPrimary, colorBlack, colorBlack))
 
         // Get User Signed In

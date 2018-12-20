@@ -30,10 +30,11 @@ fun fetchDBCurrentUser(): DatabaseReference? {
     return if (isUserSignedIn()) mFirebaseDB.getReference("users").child(mFirebaseAuth.currentUser!!.uid) else null
 }
 
-fun setIntentDetails(intent: Intent, fullName: String, collegeName: String, userName: String, gender: String,uri: Uri?,refer: String): Intent {
+fun setIntentDetails(intent: Intent, fullName: String, collegeName: String, userName: String, phoneNumber: String, gender: String,uri: Uri?,refer: String): Intent {
     intent.putExtra("fullName", fullName)
     intent.putExtra("collegeName", collegeName)
     intent.putExtra("userName", userName)
+    intent.putExtra("phoneNumber", phoneNumber)
     intent.putExtra("gender",gender)
     intent.putExtra("uri",uri)
     intent.putExtra("refer",refer)

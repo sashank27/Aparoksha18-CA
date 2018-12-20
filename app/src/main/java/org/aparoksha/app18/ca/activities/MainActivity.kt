@@ -238,9 +238,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 .setMessage(getString(R.string.invitation_message))
                 .setEmailHtmlContent("<html><body>"
                         + "<br><img src=\"http://i65.tinypic.com/33v1yxz.png\" alt=\"CA\" />"
-                        + "<p>Download Aparoksha\'18 Campus Ambassador either from Play Store or by clicking <a href=\"https://play.google.com/store/apps/details?id=org.aparoksha.app18.ca\">here</a>"
+                        + "<p>Download Aparoksha\'19 Campus Ambassador either from Play Store or by clicking <a href=\"https://play.google.com/store/apps/details?id=org.aparoksha.app18.ca\">here</a>"
                         + "</body></html>")
-                .setEmailSubject("Join Aparoksha\'18 Campus Ambassador App")
+                .setEmailSubject("Join Aparoksha\'19 Campus Ambassador App")
                 .build()
         startActivityForResult(intent, REQUEST_INVITE)
     }
