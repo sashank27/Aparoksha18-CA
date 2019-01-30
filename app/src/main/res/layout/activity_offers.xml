@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.aparoksha.app18.ca.activities.OffersActivity">
+    tools:context="org.aparoksha.app19.ca.activities.OffersActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

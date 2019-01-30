@@ -5,7 +5,7 @@
     android:id="@+id/splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.aparoksha.app18.ca.activities.SplashActivity"
+    tools:context="org.aparoksha.app19.ca.activities.SplashActivity"
     tools:layout_editor_absoluteY="25dp">
 
     <ImageView
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="APAROKSHA' 18"
+        android:text="APAROKSHA' 19"
         android:textColor="@android:color/black"
         android:textSize="40sp"
         app:layout_constraintRight_toLeftOf="@id/guideline2"

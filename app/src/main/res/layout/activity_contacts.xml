@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.aparoksha.app18.ca.activities.ContactsActivity">
+    tools:context="org.aparoksha.app19.ca.activities.ContactsActivity">
 
 
     <TextView
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
         android:layout_marginTop="24dp"
-        android:text="Pranjal Paliwal"
+        android:text="Sashank Mishra"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_email" />
@@ -90,9 +90,9 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
+        android:layout_marginStart="76dp"
         android:layout_marginTop="24dp"
-        android:text="Aayush Goel"
+        android:text="Shreyansh Chaudhary"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
         android:layout_marginTop="36dp"
-        android:text="Sashank Mishra"
+        android:text="Akshat Jain"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_contact" />
